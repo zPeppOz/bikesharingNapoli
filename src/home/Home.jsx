@@ -20,6 +20,10 @@ export default function Home() {
           <Link to="/about">
             <button className="text-xl">Chi Siamo</button>
           </Link>
+          <Link to="/Registrati">
+            <button className="text-xl">Registrati</button>
+          </Link>
+
           <Link to="/login">
             <button className="rounded-xl border border-transparent bg-[#024059] p-2 text-2xl text-gray-200 hover:opacity-80">
               Login
