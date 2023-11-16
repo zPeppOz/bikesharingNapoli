@@ -3,16 +3,12 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../hero.jpg";
 import Logo from "../easySharingLogo.png";
-import Logo2 from "../easyLogo2.png";
+import TopHeader from "./components/TopHeader";
 
 export default function Home() {
   return (
     <div className="m-0 flex h-screen w-full flex-col bg-[#024059]  text-white">
-      <header className="flex flex-row items-center justify-between bg-[#FFB93F] px-4 align-middle text-black shadow-lg">
-        <div className=" flex flex-row items-center justify-start ">
-          <img src={Logo2} alt="logo" className="h-32 w-auto" />
-          <h1 className="mt-2 text-2xl font-bold">EasySharing</h1>
-        </div>
+      <TopHeader>
         <div className="flex flex-row items-center justify-end gap-4">
           <Link to="/app">
             <button className="text-xl">Vai all'app</button>
@@ -26,7 +22,8 @@ export default function Home() {
             </button>
           </Link>
         </div>
-      </header>
+      </TopHeader>
+
       <main className="container px-32 py-20">
         <div className="flex w-full flex-row items-center justify-center gap-8">
           <div className="flex flex-col items-start justify-start">
