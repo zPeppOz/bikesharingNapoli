@@ -11,7 +11,7 @@ export default function Home() {
     <div className="m-0 flex h-screen w-full flex-col bg-[#024059] text-white">
       <TopHeader>
         <div className="flex flex-row items-center justify-end gap-4">
-          <Link to="/Maps">
+          <Link to="/app">
             <button className="text-xl">Vai all'app</button>
           </Link>
           <Link to="/about">
