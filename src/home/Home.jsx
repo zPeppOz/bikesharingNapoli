@@ -7,7 +7,7 @@ import TopHeader from "./components/TopHeader";
 
 export default function Home() {
   return (
-    <div className="m-0 flex h-screen w-full flex-col bg-[#024059]  text-white">
+    <div className="m-0 flex h-screen w-full flex-col bg-[#024059] text-white">
       <TopHeader>
         <div className="flex flex-row items-center justify-end gap-4">
           <Link to="/app">
@@ -27,11 +27,11 @@ export default function Home() {
         </div>
       </TopHeader>
 
-      <main className="container px-32 py-20">
-        <div className="flex w-full flex-row items-center justify-center gap-8">
+      <main className="container ">
+        <div className="flex w-full flex-row items-center justify-center gap-8 py-8 pl-4 md:justify-center md:px-32 md:py-20">
           <div className="flex flex-col items-start justify-start">
             <h1 className="text-5xl font-semibold">EasySharing</h1>
-            <p className="m t-4 text-2xl">
+            <p className="mt-4 text-2xl">
               Il futuro del trasporto è qui, e si chiama EasySharing
             </p>
             <Link to="/app">
@@ -47,7 +47,7 @@ export default function Home() {
             <img
               src={Hero}
               alt="hero"
-              className="h-[30rem] w-[30rem] rounded-xl object-cover object-center "
+              className="h-full w-fit rounded-xl object-cover object-center md:h-[30rem] md:w-[30rem] "
             />
           </div>
         </div>
