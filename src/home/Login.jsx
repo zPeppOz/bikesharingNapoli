@@ -4,13 +4,17 @@ import { TopHeader } from "./components/TopHeader";
 
 export default function LoginPage(props) {
   return (
-    <>
+    <div className="container h-screen w-full overflow-y-clip  bg-[#024059]">
       <TopHeader />
-      <div className="flex h-screen w-screen flex-col items-center justify-center bg-[#024059]">
-        <div className="relative flex h-2/3 w-2/3 flex-col items-center justify-around border bg-white align-middle shadow-lg  md:h-3/4 md:w-1/3 ">
+      <div className="flex h-full flex-col items-center justify-center px-24 py-8">
+        <div className=" flex h-2/3 w-1/5 flex-col items-center justify-around border bg-white shadow-lg  ">
           <h1 className="text-4xl font-bold">Login</h1>
+<<<<<<< HEAD
 
           <FormGroup className="mt-4 flex flex-col items-center justify-around gap-4 bg-white">
+=======
+          <FormGroup className=" flex flex-col items-center justify-around gap-4">
+>>>>>>> b3b55301a5006c88a68bbe3c0c593913a9970edd
             <TextField
               id="outlined-basic"
               label="Username"
@@ -29,6 +33,6 @@ export default function LoginPage(props) {
           </Button>
         </div>
       </div>
-    </>
+    </div>
   );
 }

@@ -8,7 +8,7 @@ import "./css/Home.css";
 
 export default function Home() {
   return (
-    <div className="m-0 flex h-screen w-full flex-col bg-[#024059]  text-white">
+    <div className="m-0 flex h-screen w-full flex-col bg-[#024059] text-white">
       <TopHeader>
         <div className="flex flex-row items-center justify-end gap-4">
           <Link to="/Maps">
@@ -28,12 +28,17 @@ export default function Home() {
         </div>
       </TopHeader>
 
-      <main className="container px-32 py-20">
-        <div className="flex w-full flex-row items-center justify-center gap-8">
+      <main className="container ">
+        <div className="flex w-full flex-row items-center justify-center gap-8 py-8 pl-4 md:justify-center md:px-32 md:py-20">
           <div className="flex flex-col items-start justify-start">
             <h1 className="text-5xl font-semibold">EasySharing</h1>
+<<<<<<< HEAD
             <p className="m t-4 text-2xl">
               Il futuro del trasporto è qui e si chiama EasySharing
+=======
+            <p className="mt-4 text-2xl">
+              Il futuro del trasporto è qui, e si chiama EasySharing
+>>>>>>> b3b55301a5006c88a68bbe3c0c593913a9970edd
             </p>
             <Link to="/app">
               <button className="mt-8 rounded-2xl bg-blue-500 px-4 py-2 text-2xl font-bold text-white hover:bg-blue-700">
@@ -42,7 +47,15 @@ export default function Home() {
             </Link>
           </div>
           <div className="flex flex-row items-end justify-end ">
+<<<<<<< HEAD
             <img src={Hero} alt="hero" className="hero " />
+=======
+            <img
+              src={Hero}
+              alt="hero"
+              className="h-full w-fit rounded-xl object-cover object-center md:h-[30rem] md:w-[30rem] "
+            />
+>>>>>>> b3b55301a5006c88a68bbe3c0c593913a9970edd
           </div>
         </div>
       </main>
