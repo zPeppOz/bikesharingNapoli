@@ -1,8 +1,9 @@
 .hero {
   position: relative;
   height: 600px;
-  width: 700px;
+  width: 600px;
+
   border-radius: 5%;
   left: 100px;
-  top: 10px;
+  top: 50px;
 }
