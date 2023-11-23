@@ -34,7 +34,6 @@ export default function MainApp(props) {
     setStazioniOpen(!isStazioniOpen);
   };
 
-<<<<<<< HEAD
   const handleCloseStationInfoWindow = () => {
     setSelectedStation(null);
   };
@@ -45,12 +44,10 @@ export default function MainApp(props) {
   //funzione per gestire la visibilità della finestra home
   const toggleHome = () => {
     setHomeOpen(!isHomeOpen);
-=======
   const [isBottomDivOpen, setBottomDivOpen] = useState(false);
 
   const showBottomDiv = () => {
     setBottomDivOpen(!isBottomDivOpen);
->>>>>>> 421c910 (bottomdiv con animazione)
   };
 
   return (
