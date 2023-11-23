@@ -4,34 +4,39 @@
     "name": "Napoli Carità 1",
     "lat": 40.844171,
     "lng": 14.249246,
-    "bikes": []
+    "bikes": [],
+    "isVisible": true
   },
   {
     "id": "napoli-toledo",
     "name": "Napoli Toledo 1",
     "lat": 40.841109,
     "lng": 14.248704,
-    "bikes": []
+    "bikes": [],
+    "isVisible": true
   },
   {
     "id": "napoli-plebiscito",
     "name": "Napoli Plebiscito 1",
     "lat": 40.836992,
     "lng": 14.248704,
-    "bikes": []
+    "bikes": [],
+    "isVisible": true
   },
   {
     "id": "napoli-garibaldi",
     "name": "Napoli Garibaldi 1",
     "lat": 40.850779,
     "lng": 14.272507,
-    "bikes": []
+    "bikes": [],
+    "isVisible": true
   },
   {
     "id": "napoli-vomero",
     "name": "Napoli Vomero 1",
     "lat": 40.842531,
     "lng": 14.229086,
-    "bikes": []
+    "bikes": [],
+    "isVisible": true
   }
 ]

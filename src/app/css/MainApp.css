@@ -1,0 +1,59 @@
+.hamburger {
+  position: absolute;
+  background-color: transparent;
+  height: 500px;
+  width: 200px;
+  left: 0px;
+  top: 70px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: transparent;
+  position: absolute;
+  height: 100%;
+  overflow: auto;
+}
+
+ul#menu li {
+  background-color: rgb(201, 201, 201);
+  border-left: 5px solid rgb(0, 34, 170);
+  display: flex;
+  border-left: 20x solid gray;
+  display: block;
+  width: 200px;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+/* Quando il mouse non è sopra l'elemento li */
+
+/* SCRITTE DEL MENU HAMBURGER */
+ul#menu li a {
+  color: black;
+  display: block;
+  font-weight: bold;
+  font-family: serif;
+  padding-left: 50px;
+  text-decoration: none;
+  width: 135px; /* 150px - 15px (padding) */
+  height: 30px;
+  line-height: 40px;
+  margin-left: 20px;
+}
+
+ul#menu li.active,
+ul#menu li:hover {
+  background-color: #54bae2;
+  border-left: 5px solid #ff831c;
+}
+
+/* amrker delle stazioni di colore verde */
+.stazioni {
+  background-color: black;
+  height: 500px;
+  width: 200px;
+}
