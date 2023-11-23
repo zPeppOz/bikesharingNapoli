@@ -5,17 +5,14 @@ import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBike";
 import { FaUser } from "react-icons/fa";
-<<<<<<< HEAD
 import { InfoWindow } from "@vis.gl/react-google-maps";
 
 import "./css/MainApp.css";
 import { Button } from "@mui/material";
-=======
 import Marker from "./components/Marker.jsx";
 
 import "./css/MainApp.css";
 import { BottomDiv } from "./components/BottomDiv.jsx";
->>>>>>> 421c910 (bottomdiv con animazione)
 
 export default function MainApp(props) {
   // Stato per gestire la visibilità del menu
