@@ -1,13 +1,21 @@
 import React, { useState } from "react";
 import MapProvider from "./components/Map.jsx";
-import { Map, Marker } from "@vis.gl/react-google-maps";
+import { Map } from "@vis.gl/react-google-maps";
 import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
+import PedalBikeIcon from "@mui/icons-material/PedalBike";
 import { FaUser } from "react-icons/fa";
+<<<<<<< HEAD
 import { InfoWindow } from "@vis.gl/react-google-maps";
 
 import "./css/MainApp.css";
 import { Button } from "@mui/material";
+=======
+import Marker from "./components/Marker.jsx";
+
+import "./css/MainApp.css";
+import { BottomDiv } from "./components/BottomDiv.jsx";
+>>>>>>> 421c910 (bottomdiv con animazione)
 
 export default function MainApp(props) {
   // Stato per gestire la visibilità del menu
@@ -26,6 +34,7 @@ export default function MainApp(props) {
     setStazioniOpen(!isStazioniOpen);
   };
 
+<<<<<<< HEAD
   const handleCloseStationInfoWindow = () => {
     setSelectedStation(null);
   };
@@ -36,16 +45,23 @@ export default function MainApp(props) {
   //funzione per gestire la visibilità della finestra home
   const toggleHome = () => {
     setHomeOpen(!isHomeOpen);
+=======
+  const [isBottomDivOpen, setBottomDivOpen] = useState(false);
+
+  const showBottomDiv = () => {
+    setBottomDivOpen(!isBottomDivOpen);
+>>>>>>> 421c910 (bottomdiv con animazione)
   };
 
   return (
-    <div className="h-screen w-screen">
+    <div className="h-screen w-screen overflow-hidden">
       <MapProvider>
         <Map
           zoom={5}
           center={{ lat: 22.54992, lng: 0 }}
           gestureHandling={"greedy"}
           disableDefaultUI={true}
+          mapId={"2793768722fef41"}
         >
           {biciclette
             .filter((b) => {
@@ -54,40 +70,84 @@ export default function MainApp(props) {
             .map((bicicletta) => {
               return (
                 <Marker
-                  key={bicicletta.id}
-                  position={{
-                    lat: bicicletta.lastLat,
-                    lng: bicicletta.lastLong,
+                  markerProps={{
+                    key: bicicletta.id,
                   }}
                   icon={{
                     url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
                   }}
-                />
+                  position={{
+                    lat: bicicletta.lastLat,
+                    lng: bicicletta.lastLong,
+                  }}
+                  pinProps={
+                    {
+                      // glyph: <PedalBikeIcon />,
+                    }
+                  }
+                >
+                  <p>{bicicletta.id}</p>
+                </Marker>
               );
             })}
 
           {stazioni
             .filter((stazione) => stazione.isVisible === true)
-            .map((stazione) => (
-              <div>
+            .map((stazione) => {
+              return (
                 <Marker
-                  className="stazioni"
-                  key={stazione.id}
+                  markerProps={{
+                    key: stazione.id,
+                  }}
                   position={{
                     lat: stazione.lat,
                     lng: stazione.lng,
                   }}
-                  title={stazione.nome}
-                  //colore marker
-                  icon={{
-                    url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
+                  pinProps={{
+                    // glyph: <PedalBikeIcon />,
+                    background: "#FBBC04",
+                    glyphColor: "#000",
+
+                    borderColor: "#000",
                   }}
-                  onClick={toggleStazioni}
-                ></Marker>
-              </div>
-            ))}
+                  onClick={showBottomDiv}
+                >
+                  <h2>
+                    Numero biciclette:{" "}
+                    {
+                      stazione.bikes.filter((b) => {
+                        return b.isReserved === false;
+                      }).length
+                    }
+                  </h2>
+                </Marker>
+              );
+            })}
         </Map>
-        <div className="absolute bottom-0 left-0 right-0 mx-auto mb-4 h-1/4 w-2/3 rounded-lg border border-blue-200 bg-slate-200 p-2 shadow-md"></div>
+
+        <BottomDiv isOpen={isBottomDivOpen}>
+          <div className="flex flex-col justify-between">
+            <div className="flex flex-col gap-2">
+              <p className="text-3xl">
+                Biciclette disponibili:{" "}
+                {
+                  biciclette.filter((b) => {
+                    return b.isVisible === true;
+                  }).length
+                }
+              </p>
+              <p className="text-3xl">
+                Stazioni:{" "}
+                {
+                  stazioni.filter((s) => {
+                    return s.isVisible === true;
+                  }).length
+                }
+              </p>
+            </div>
+          </div>
+        </BottomDiv>
+
         <button
           className="absolute left-5 top-5 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
           onClick={toggleMenu}

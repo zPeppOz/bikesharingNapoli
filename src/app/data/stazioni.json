@@ -4,7 +4,116 @@
     "name": "Napoli Carità 1",
     "lat": 40.844171,
     "lng": 14.249246,
-    "bikes": [],
+    "bikes": [
+      {
+        "id": 1,
+        "lastLat": 40.852568,
+        "lastLong": 14.284028,
+        "battery": 0.12,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": false,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 2,
+        "lastLat": 40.854584,
+        "lastLong": 14.319409,
+        "battery": 0.14,
+        "isCharging": true,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 3,
+        "lastLat": 40.832178,
+        "lastLong": 14.343429,
+        "battery": 0.16,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 4,
+        "lastLat": 40.857888,
+        "lastLong": 14.218082,
+        "battery": 0.31,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      },
+      {
+        "id": 5,
+        "lastLat": 40.863558,
+        "lastLong": 14.349484,
+        "battery": 0.96,
+        "isCharging": false,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 6,
+        "lastLat": 40.841227,
+        "lastLong": 14.252654,
+        "battery": 0.85,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      },
+      {
+        "id": 7,
+        "lastLat": 40.833386,
+        "lastLong": 14.198151,
+        "battery": 0.55,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 8,
+        "lastLat": 40.865576,
+        "lastLong": 14.277656,
+        "battery": 0.39,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": false
+      },
+      {
+        "id": 9,
+        "lastLat": 40.866422,
+        "lastLong": 14.303885,
+        "battery": 0.69,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": false
+      }
+    ],
     "isVisible": true
   },
   {
