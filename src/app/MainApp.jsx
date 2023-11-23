@@ -4,8 +4,10 @@ import { Map, Marker } from "@vis.gl/react-google-maps";
 import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
 import { FaUser } from "react-icons/fa";
+import { InfoWindow } from "@vis.gl/react-google-maps";
 
 import "./css/MainApp.css";
+import { Button } from "@mui/material";
 
 export default function MainApp(props) {
   // Stato per gestire la visibilità del menu
@@ -22,6 +24,18 @@ export default function MainApp(props) {
   //funzione per gestire la visibilità delle stazioni
   const toggleStazioni = () => {
     setStazioniOpen(!isStazioniOpen);
+  };
+
+  const handleCloseStationInfoWindow = () => {
+    setSelectedStation(null);
+  };
+
+  //variaible di stato per la finestra home
+  const [isHomeOpen, setHomeOpen] = useState(false);
+
+  //funzione per gestire la visibilità della finestra home
+  const toggleHome = () => {
+    setHomeOpen(!isHomeOpen);
   };
 
   return (
@@ -73,9 +87,7 @@ export default function MainApp(props) {
               </div>
             ))}
         </Map>
-
         <div className="absolute bottom-0 left-0 right-0 mx-auto mb-4 h-1/4 w-2/3 rounded-lg border border-blue-200 bg-slate-200 p-2 shadow-md"></div>
-
         <button
           className="absolute left-5 top-5 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
           onClick={toggleMenu}
@@ -83,21 +95,18 @@ export default function MainApp(props) {
           <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
         </button>
 
-        {isStazioniOpen && (
-          <div className="stazioni absolute">
-            <ul className="absolute">
-              <li>
-                <a> biciclette disponibli %D</a>
-              </li>
-            </ul>
-          </div>
-        )}
-
         {isMenuOpen && (
           <div className="hamburger">
             <ul id="menu">
               <li>
-                <a href="#">Home</a>
+                <a
+                  onClick={() => {
+                    toggleMenu();
+                    toggleHome();
+                  }}
+                >
+                  Home
+                </a>
               </li>
               <li>
                 <a href="#">About Us</a>
@@ -111,6 +120,26 @@ export default function MainApp(props) {
               <li>
                 <a href="#">Contact</a>
               </li>
+            </ul>
+          </div>
+        )}
+
+        {isHomeOpen && (
+          <div className="home absolute">
+            <ul id="menu">
+              <button
+                id="back"
+                onClick={() => {
+                  toggleMenu();
+                  toggleHome();
+                }}
+              >
+                INDIETRO
+              </button>
+              <li>dati</li>
+              <li>dati 2</li>
+              <li>dati</li>
+              <li>dati 2</li>
             </ul>
           </div>
         )}

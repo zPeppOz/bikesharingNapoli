@@ -1,18 +1,20 @@
 .hamburger {
   position: absolute;
-  background-color: transparent;
-  height: 500px;
-  width: 200px;
+  background-color: white;
+  height: 100vh;
   left: 0px;
   top: 70px;
 }
 
-ul {
+ul#menu {
   list-style-type: none;
-  margin: 0;
-  padding: 0;
-  width: 200px;
-  background-color: transparent;
+  background-color: white;
+  width: 250px;
+  background-color: rgb(
+    240,
+    240,
+    240
+  ); /* Corretto formato per il colore di sfondo */
   position: absolute;
   height: 100%;
   overflow: auto;
@@ -22,9 +24,9 @@ ul#menu li {
   background-color: rgb(201, 201, 201);
   border-left: 5px solid rgb(0, 34, 170);
   display: flex;
-  border-left: 20x solid gray;
+  border-left: 20px solid gray;
   display: block;
-  width: 200px;
+  width: 500px;
   height: 40px;
   margin-bottom: 10px;
 }
@@ -51,9 +53,24 @@ ul#menu li:hover {
   border-left: 5px solid #ff831c;
 }
 
-/* amrker delle stazioni di colore verde */
-.stazioni {
-  background-color: black;
-  height: 500px;
+.home {
+  position: absolute;
+  background-color: rgb(240, 240, 240);
+  height: 250px;
   width: 200px;
+  left: 0px;
+  top: 70px;
+}
+
+/* stesso css per di hamburger per home*/
+#back {
+  background-color: rgb(182, 181, 181);
+  width: 60px;
+  height: 20px;
+  /* al centor */
+  margin-left: 70px;
+
+  border-radius: 50%;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
