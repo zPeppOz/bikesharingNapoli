@@ -41,6 +41,7 @@ export default function MainApp(props) {
   //funzione per gestire la visibilità della finestra home
   const toggleHome = () => {
     setHomeOpen(!isHomeOpen);
+  };
   const [isBottomDivOpen, setBottomDivOpen] = useState(false);
 
   const showBottomDiv = () => {
