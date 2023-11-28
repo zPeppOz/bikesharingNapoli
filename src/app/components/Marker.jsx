@@ -28,12 +28,12 @@ export default function Marker(props) {
         position={props.position}
         onClick={toggleInfoWindow}
       >
-        <Pin {...props.pinProps} />
         {isInfoWindowOpen && (
           <InfoWindow anchor={marker} onCloseClick={closeInfoWindow}>
             <div>{props.children}</div>
           </InfoWindow>
         )}
+        <Pin {...props.pinProps} />
       </AdvancedMarker>
     </>
   );

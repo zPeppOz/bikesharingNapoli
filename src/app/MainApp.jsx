@@ -17,7 +17,7 @@ import { BottomDiv } from "./components/BottomDiv.jsx";
 export default function MainApp(props) {
   // Stato per gestire la visibilità del menu
   const [isMenuOpen, setMenuOpen] = useState(false);
-
+  const [center, setCenter] = useState({ lat: 22.54992, lng: 0 });
   // Funzione per gestire il clic sul bottone e cambiare la visibilità del menu
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
@@ -44,8 +44,9 @@ export default function MainApp(props) {
   };
   const [isBottomDivOpen, setBottomDivOpen] = useState(false);
 
-  const showBottomDiv = () => {
+  const showBottomDiv = (position) => {
     setBottomDivOpen(!isBottomDivOpen);
+    setCenter(position);
   };
 
   return (
@@ -53,7 +54,7 @@ export default function MainApp(props) {
       <MapProvider>
         <Map
           zoom={5}
-          center={{ lat: 22.54992, lng: 0 }}
+          center={center}
           gestureHandling={"greedy"}
           disableDefaultUI={true}
           mapId={"2793768722fef41"}
@@ -102,19 +103,20 @@ export default function MainApp(props) {
                     // glyph: <PedalBikeIcon />,
                     background: "#FBBC04",
                     glyphColor: "#000",
-
                     borderColor: "#000",
                   }}
-                  onClick={showBottomDiv}
+                  onClick={() => {
+                    showBottomDiv({ lat: stazione.lat, lng: stazione.lng });
+                  }}
                 >
-                  <h2>
+                  <p>
                     Numero biciclette:{" "}
                     {
                       stazione.bikes.filter((b) => {
                         return b.isReserved === false;
                       }).length
                     }
-                  </h2>
+                  </p>
                 </Marker>
               );
             })}
