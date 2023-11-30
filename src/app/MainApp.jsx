@@ -16,6 +16,7 @@ import {
   ImageOverlay,
 } from "react-leaflet";
 import bikeSVG from "../assets/bike.svg";
+import station from "../assets/ev-station.svg";
 import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
@@ -81,9 +82,15 @@ export default function MainApp(props) {
   };
 
   const bikeIcon = L.divIcon({
-    html: '<img src="' + bikeSVG + '" className="bike" />',
+    html: '<img src="' + bikeSVG + '"  />',
     iconSize: [40, 40],
-    className: "border rounded-full border-black !w-12 !h-12 ",
+    className: "border rounded-full p-1 border-black !w-12 !h-12 bg-white ",
+  });
+
+  const stationIcon = L.divIcon({
+    html: '<img src="' + station + '"  />',
+    iconSize: [40, 40],
+    className: "border rounded-full p-1 border-black !w-12 !h-12 bg-green-300 ",
   });
 
   return (
@@ -113,8 +120,27 @@ export default function MainApp(props) {
         />
         {stazioni.map((stazione) => {
           return (
-            <Marker position={[stazione.lat, stazione.lng]} icon={bikeIcon}>
+            <Marker
+              position={[stazione.lat, stazione.lng]}
+              icon={stationIcon}
+              eventHandlers={{
+                click: () => {
+                  handleMarkerClick(stazione);
+                  toggleBottomDiv();
+                },
+              }}
+            >
               <Popup>{stazione.id}</Popup>
+            </Marker>
+          );
+        })}
+        {biciclette.map((bicicletta) => {
+          return (
+            <Marker
+              position={[bicicletta.lastLat, bicicletta.lastLong]}
+              icon={bikeIcon}
+            >
+              <Popup>{bicicletta.id}</Popup>
             </Marker>
           );
         })}
