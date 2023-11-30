@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import ReactDOM from "react-dom";
 import L from "leaflet";
 import {
   Map,
@@ -14,13 +15,14 @@ import {
   Popup,
   ImageOverlay,
 } from "react-leaflet";
+import bikeSVG from "../assets/bike.svg";
 import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
 import { FaUser } from "react-icons/fa";
 
 import "./css/MainApp.css";
-import { Button } from "@mui/material";
+import { Button, SvgIcon } from "@mui/material";
 // import Marker from "./components/Marker.jsx";
 
 import "./css/MainApp.css";
@@ -29,6 +31,7 @@ import ShowMarkers from "./components/ShowMarkers.jsx";
 
 export default function MainApp(props) {
   // Stato per gestire la visibilità del menu
+  const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [center, setCenter] = useState([22.54992, -3]);
   // Funzione per gestire il clic sul bottone e cambiare la visibilità del menu
@@ -77,19 +80,19 @@ export default function MainApp(props) {
     setSelected(null);
   };
 
-  const bikeIcon = new L.DivIcon(
-    {
-      html: (
-        <p>
-          <PedalBikeIcon />
-        </p>
-      ),
-    },
-    { className: "bike-icon" }
-  );
+  const bikeIcon = L.divIcon({
+    html: '<img src="' + bikeSVG + '" className="bike" />',
+    iconSize: [40, 40],
+    className: "border rounded-full border-black !w-12 !h-12 ",
+  });
 
   return (
     <div className="h-screen w-screen overflow-hidden">
+      {isLoading && (
+        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-white">
+          <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
+        </div>
+      )}
       <MapContainer
         center={center}
         zoom={5}
@@ -102,6 +105,11 @@ export default function MainApp(props) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           zIndex={0}
+          eventHandlers={{
+            load: () => {
+              setIsLoading(false);
+            },
+          }}
         />
         {stazioni.map((stazione) => {
           return (
@@ -117,36 +125,6 @@ export default function MainApp(props) {
       >
         <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
       </button>
-      {/* <MapProvider>
-        <Map
-          zoom={5}
-          center={center}
-          gestureHandling={"greedy"}
-          disableDefaultUI={true}
-          mapId={"2793768722fef41"}
-        >
-          {stazioni
-            .filter((s) => s.isVisible === true)
-            .map((stazione) => {
-              return (
-                <MarkerInfo
-                  stazione={stazione}
-                  handleCloseStationInfoWindow={handleCloseStationInfoWindow}
-                  isOpen={selected === stazione.id}
-                  click={() => {
-                    if (!BottomDiv) {
-                      toggleBottomDiv();
-                    }
-                    setCenterPosition({ lat: stazione.lat, lng: stazione.lng });
-                    setTimeout(() => {
-                      handleMarkerClick(stazione.id);
-                    }, 100);
-                  }}
-                />
-              );
-            })}
-        </Map>
-      </MapProvider> */}
 
       <BottomDiv isOpen={isBottomDivOpen}>
         <div className="flex flex-col justify-between">

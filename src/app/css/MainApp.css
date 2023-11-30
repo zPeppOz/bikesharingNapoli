@@ -84,3 +84,10 @@ ul#menu li:hover {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+
+.bike {
+  border-radius: 50%;
+  width: auto;
+  border: 1px solid black;
+  height: 150px;
+}
