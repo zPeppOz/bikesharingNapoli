@@ -117,27 +117,166 @@
     "isVisible": true
   },
   {
-    "id": "napoli-toledo",
-    "name": "Napoli Toledo 1",
-    "lat": 40.841109,
-    "lng": 14.248704,
-    "bikes": [],
-    "isVisible": true
-  },
-  {
     "id": "napoli-plebiscito",
     "name": "Napoli Plebiscito 1",
     "lat": 40.836992,
     "lng": 14.248704,
-    "bikes": [],
+    "bikes": [
+      {
+        "id": 16,
+        "lastLat": 40.852568,
+        "lastLong": 14.284028,
+        "battery": 0.12,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": false,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 17,
+        "lastLat": 40.854584,
+        "lastLong": 14.319409,
+        "battery": 0.14,
+        "isCharging": true,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 18,
+        "lastLat": 40.832178,
+        "lastLong": 14.343429,
+        "battery": 0.16,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 19,
+        "lastLat": 40.857888,
+        "lastLong": 14.218082,
+        "battery": 0.31,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      },
+      {
+        "id": 20,
+        "lastLat": 40.863558,
+        "lastLong": 14.349484,
+        "battery": 0.96,
+        "isCharging": false,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 21,
+        "lastLat": 40.841227,
+        "lastLong": 14.252654,
+        "battery": 0.85,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      }
+    ],
     "isVisible": true
   },
+
   {
     "id": "napoli-garibaldi",
     "name": "Napoli Garibaldi 1",
     "lat": 40.850779,
     "lng": 14.272507,
-    "bikes": [],
+    "bikes": [
+      {
+        "id": 22,
+        "lastLat": 40.852568,
+        "lastLong": 14.284028,
+        "battery": 0.12,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": false,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 23,
+        "lastLat": 40.854584,
+        "lastLong": 14.319409,
+        "battery": 0.14,
+        "isCharging": true,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 24,
+        "lastLat": 40.832178,
+        "lastLong": 14.343429,
+        "battery": 0.16,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 25,
+        "lastLat": 40.857888,
+        "lastLong": 14.218082,
+        "battery": 0.31,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      },
+      {
+        "id": 26,
+        "lastLat": 40.863558,
+        "lastLong": 14.349484,
+        "battery": 0.96,
+        "isCharging": false,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 27,
+        "lastLat": 40.841227,
+        "lastLong": 14.252654,
+        "battery": 0.85,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      }
+    ],
     "isVisible": true
   },
   {
@@ -145,7 +284,80 @@
     "name": "Napoli Vomero 1",
     "lat": 40.842531,
     "lng": 14.229086,
-    "bikes": [],
+    "bikes": [
+      {
+        "id": 10,
+        "lastLat": 40.852568,
+        "lastLong": 14.284028,
+        "battery": 0.12,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": false,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 11,
+        "lastLat": 40.854584,
+        "lastLong": 14.319409,
+        "battery": 0.14,
+        "isCharging": true,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 12,
+        "lastLat": 40.832178,
+        "lastLong": 14.343429,
+        "battery": 0.16,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": true
+      },
+      {
+        "id": 13,
+        "lastLat": 40.857888,
+        "lastLong": 14.218082,
+        "battery": 0.31,
+        "isCharging": false,
+        "isMoving": false,
+        "isVisible": true,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      },
+      {
+        "id": 14,
+        "lastLat": 40.863558,
+        "lastLong": 14.349484,
+        "battery": 0.96,
+        "isCharging": false,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": false,
+        "attentionNeeded": false
+      },
+      {
+        "id": 15,
+        "lastLat": 40.841227,
+        "lastLong": 14.252654,
+        "battery": 0.85,
+        "isCharging": true,
+        "isMoving": true,
+        "isVisible": false,
+        "isReserved": true,
+        "isLocked": true,
+        "attentionNeeded": true
+      }
+    ],
     "isVisible": true
   }
 ]

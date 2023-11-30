@@ -6,19 +6,67 @@ import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBike";
 import { FaUser } from "react-icons/fa";
 import { InfoWindow } from "@vis.gl/react-google-maps";
-
+import SectionMenu from "./components/SectionMenu.jsx";
 import "./css/MainApp.css";
 import { Button } from "@mui/material";
 import Marker from "./components/Marker.jsx";
 
 import "./css/MainApp.css";
 import { BottomDiv } from "./components/BottomDiv.jsx";
+import { ControlPointDuplicate } from "@mui/icons-material";
 
 export default function MainApp(props) {
+  const menuSections = [
+    {
+      id: 1,
+      label: "Home",
+      data: ["Dati 1", "Dati 2", "Dati 3", "Dati 4", "Dati 5"],
+    },
+
+    {
+      id: 2,
+      label: "About Us",
+      data: ["Dati A", "Dati B", "Dati C"],
+    },
+    {
+      id: 3,
+      label: "Services",
+      data: ["Servizio 1", "Servizio 2", "Servizio 3"],
+    },
+    {
+      id: 4,
+      label: "Portfolio",
+      data: ["Progetto A", "Progetto B", "Progetto C"],
+    },
+    {
+      id: 5,
+      label: "Contact",
+      data: ["Contatto 1", "Contatto 2", "Contatto 3"],
+    },
+    // Aggiungi altre sezioni del menu come necessario
+  ];
+
+  const [selectedBack, setSelectedBack] = useState(false);
+
+  const toggleBack = () => {
+    setSelectedBack(!selectedBack);
+    setSelectedSection(false);
+    setMenuOpen(true);
+  };
+
+  const [selectedSection, setSelectedSection] = useState(null);
+
+  const handleSectionClick = (section) => {
+    console.log("Clicked section:", section);
+    setSelectedSection(section);
+    setSelectedBack(true);
+  };
+
   // Stato per gestire la visibilità del menu
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [center, setCenter] = useState({ lat: 22.54992, lng: 0 });
   // Funzione per gestire il clic sul bottone e cambiare la visibilità del menu
+
   const toggleMenu = () => {
     setMenuOpen(!isMenuOpen);
   };
@@ -27,13 +75,6 @@ export default function MainApp(props) {
   const [isStazioniOpen, setStazioniOpen] = useState(false);
 
   //funzione per gestire la visibilità delle stazioni
-  const toggleStazioni = () => {
-    setStazioniOpen(!isStazioniOpen);
-  };
-
-  const handleCloseStationInfoWindow = () => {
-    setSelectedStation(null);
-  };
 
   //variaible di stato per la finestra home
   const [isHomeOpen, setHomeOpen] = useState(false);
@@ -44,9 +85,31 @@ export default function MainApp(props) {
   };
   const [isBottomDivOpen, setBottomDivOpen] = useState(false);
 
+  //funzione per gestire la visibilità della finestra bottom
   const showBottomDiv = (position) => {
-    setBottomDivOpen(!isBottomDivOpen);
+    setBottomDivOpen(true);
     setCenter(position);
+  };
+
+  //funzione per chiude le finestre al click sulla mappa
+  const handleMapClick = () => {
+    //chiude il menu e la home se sono aperti
+    if (isMenuOpen) {
+      toggleMenu(false);
+    }
+    if (isHomeOpen) {
+      toggleHome(false);
+    }
+    if (isBottomDivOpen) {
+      setBottomDivOpen(false);
+    }
+    if (isStazioniOpen) {
+      setStazioniOpen(false);
+    }
+
+    if (selectedBack) {
+      setSelectedBack(false);
+    }
   };
 
   return (
@@ -58,163 +121,36 @@ export default function MainApp(props) {
           gestureHandling={"greedy"}
           disableDefaultUI={true}
           mapId={"2793768722fef41"}
-        >
-          {biciclette
-            .filter((b) => {
-              return b.isVisible === true;
-            })
-            .map((bicicletta) => {
-              return (
-                <Marker
-                  markerProps={{
-                    key: bicicletta.id,
-                  }}
-                  icon={{
-                    url: "https://maps.google.com/mapfiles/ms/icons/blue-dot.png",
-                  }}
-                  position={{
-                    lat: bicicletta.lastLat,
-                    lng: bicicletta.lastLong,
-                  }}
-                  pinProps={
-                    {
-                      // glyph: <PedalBikeIcon />,
-                    }
-                  >
-                    <p>{bicicletta.id}</p>
-                  </Marker>
-                );
-              })}
+          onClick={handleMapClick}
+        ></Map>
 
-            {stazioni
-              .filter((stazione) => stazione.isVisible === true)
-              .map((stazione) => {
-                return (
-                  <Marker
-                    markerProps={{
-                      key: stazione.id,
-                    }}
-                    position={{
-                      lat: stazione.lat,
-                      lng: stazione.lng,
-                    }}
-                    pinProps={{
-                      // glyph: <PedalBikeIcon />,
-                      background: "#FBBC04",
-                      glyphColor: "#000",
+        <div>
+          <button className="buttonMenu" onClick={toggleMenu}>
+            <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
+          </button>
 
-                      borderColor: "#000",
-                    }}
-                    onClick={showBottomDiv}
-                  >
-                    <h2>
-                      Numero biciclette:{" "}
-                      {
-                        stazione.bikes.filter((b) => {
-                          return b.isReserved === false;
-                        }).length
-                      }
-                    </h2>
-                  </Marker>
-                );
-              })}
-          </Map>
-
-          <BottomDiv isOpen={isBottomDivOpen}>
-            <div className="flex flex-col justify-between">
-              <div className="flex flex-col gap-2">
-                <p className="text-3xl">
-                  Biciclette disponibili:{" "}
-                  {
-                    biciclette.filter((b) => {
-                      return b.isVisible === true;
-                    }).length
-                  }
-                >
-                  <p>{bicicletta.id}</p>
-                </Marker>
-              );
-            })}
-
-          {stazioni
-            .filter((stazione) => stazione.isVisible === true)
-            .map((stazione) => {
-              return (
-                <Marker
-                  markerProps={{
-                    key: stazione.id,
-                  }}
-                  position={{
-                    lat: stazione.lat,
-                    lng: stazione.lng,
-                  }}
-                  pinProps={{
-                    // glyph: <PedalBikeIcon />,
-                    background: "#FBBC04",
-                    glyphColor: "#000",
-                    borderColor: "#000",
-                  }}
-                  onClick={() => {
-                    showBottomDiv({ lat: stazione.lat, lng: stazione.lng });
-                  }}
-                >
-                  <p>
-                    Numero biciclette:{" "}
-                    {
-                      stazione.bikes.filter((b) => {
-                        return b.isReserved === false;
-                      }).length
-                    }
-                  </p>
-                </Marker>
-              );
-            })}
-        </Map>
-
-        <BottomDiv isOpen={isBottomDivOpen}>
-          <div className="flex flex-col justify-between">
-            <div className="flex flex-col gap-2">
-              <p className="text-3xl">
-                Biciclette disponibili:{" "}
-                {
-                  biciclette.filter((b) => {
-                    return b.isVisible === true;
-                  }).length
-                }
-              </p>
-              <p className="text-3xl">
-                Stazioni:{" "}
-                {
-                  stazioni.filter((s) => {
-                    return s.isVisible === true;
-                  }).length
-                }
-              </p>
-            </div>
+          {selectedBack && (
+            <button className="buttonSection" onClick={toggleBack}>
+              <img src="https://img.icons8.com/ios-filled/50/000000/undo.png" />
+            </button>
           )}
+        </div>
 
-          {isHomeOpen && (
-            <div className="home absolute">
-              <ul id="menu">
-                <button
-                  id="back"
-                  onClick={() => {
-                    toggleMenu();
-                    toggleHome();
-                  }}
-                >
-                  INDIETRO
-                </button>
-                <li>dati</li>
-                <li>dati 2</li>
-                <li>dati</li>
-                <li>dati 2</li>
-              </ul>
-            </div>
-          )}
-        </MapProvider>
-      </div>
-    );
-  };
+        {isMenuOpen && (
+          <div className="hamburger">
+            <ul id="menu">
+              {menuSections.map((section) => (
+                <li key={section.id}>
+                  <a onClick={() => handleSectionClick()}>{section.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
+        {/* Rendi condizionalmente SectionMenu */}
+        {selectedSection && <SectionMenu data={selectedSection.data} />}
+      </MapProvider>
+    </div>
+  );
 }
-
