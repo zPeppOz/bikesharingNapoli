@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AdvancedMarker,
   InfoWindow,
@@ -8,17 +8,20 @@ import {
 
 export default function Marker(props) {
   const [markerRef, marker] = useAdvancedMarkerRef();
-  const [isInfoWindowOpen, setInfoWindowOpen] = useState(false);
+  const [isInfoWindowOpen, setIsInfoWindowOpen] = useState(false);
 
-  const toggleInfoWindow = () => {
-    setInfoWindowOpen(!isInfoWindowOpen);
-    props.onClick();
-  };
+  // useEffect(() => {
+  //   if (props.isOpen) {
+  //     setIsInfoWindowOpen(true);
+  //   }
+  //   if (!props.isOpen) {
+  //     setIsInfoWindowOpen(false);
+  //   }
+  // }, [props.isOpen]);
 
-  const closeInfoWindow = () => {
-    setInfoWindowOpen(false);
-  };
-  console.log(props);
+  console.log(props.isOpen, props.markerProps.key);
+
+  console.log(props.children);
 
   return (
     <>
@@ -26,19 +29,31 @@ export default function Marker(props) {
         {...props.markerProps}
         ref={markerRef}
         position={props.position}
-        onClick={toggleInfoWindow}
+        onClick={() => {
+          // setIsInfoWindowOpen(!isInfoWindowOpen);
+          props.onClick();
+        }}
       >
-        {isInfoWindowOpen && (
-          <InfoWindow anchor={marker} onCloseClick={closeInfoWindow}>
-            <div>{props.children}</div>
+        <Pin {...props.pinProps} />
+        {props.isOpen && (
+          <InfoWindow anchor={marker} onCloseClick={props.closeInfoWindow}>
+            {props.children}
           </InfoWindow>
         )}
-        <Pin {...props.pinProps} />
       </AdvancedMarker>
+      {/* <AdvancedMarker
+        {...props.markerProps}
+        ref={markerRef}
+        position={props.position}
+        onClick={props.onClick}
+      >
+        <Pin {...props.pinProps} />
+        {props.isInfoWindowOpen && (
+          <InfoWindow anchor={marker} onCloseClick={props.closeInfoWindow}>
+            {props.children}
+          </InfoWindow>
+        )}
+      </AdvancedMarker> */}
     </>
   );
 }
-
-const pinStyle = {
-  background: "red",
-};
