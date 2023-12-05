@@ -79,15 +79,8 @@ export default function MainApp(props) {
   const [isBottomDivOpen, setBottomDivOpen] = useState(false);
   const [bottomDivData, setBottomDivData] = useState(null);
 
-  //variabile contatore per capire se un marker è stato cliccato
-  const [isMarkerClicked, setMarkerClicked] = useState(0);
-
   const toggleBottomDiv = () => {
-    //se è aperto lo chiude
-    if (isMarkerClicked === 0) {
-      setMarkerClicked(1);
-      setBottomDivOpen(true);
-    }
+    setBottomDivOpen(!isBottomDivOpen);
   };
 
   const setCenterPosition = (position) => {
@@ -97,24 +90,21 @@ export default function MainApp(props) {
   const hideBottomDiv = () => {
     setBottomDivOpen(false);
   };
+  const showBottomDiv = () => {
+    setBottomDivOpen(true);
+  };
 
   const [selected, setSelected] = useState(null);
 
   const handleMarkerClick = (marker) => {
-    // se il marker cliccato è diverso da quello selezionato e la finestra è aperta, cambia il marker selezionato e
-    if (selected !== marker && isBottomDivOpen) {
-      setSelected(marker);
-    }
-    // se il marker cliccato è uguale a quello selezionato e la finestra è aperta, chiudi la finestra
-    else if (selected === marker && isBottomDivOpen) {
+    console.log(selected, marker);
+    if (selected === marker) {
       setSelected(null);
-      toggleBottomDiv();
+      hideBottomDiv();
+      return;
     }
-    // se il marker cliccato è diverso da quello selezionato e la finestra è chiusa, apri la finestra
-    else if (selected !== marker && !isBottomDivOpen) {
-      setSelected(marker);
-      toggleBottomDiv();
-    }
+    setSelected(marker);
+    !isBottomDivOpen && showBottomDiv();
   };
 
   const handleMarkerClose = () => {
@@ -123,11 +113,6 @@ export default function MainApp(props) {
 
   return (
     <div className="h-screen w-screen overflow-hidden">
-      {isLoading && (
-        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-white">
-          <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
-        </div>
-      )}
       <MapContainer
         center={center}
         zoom={13}
@@ -135,6 +120,7 @@ export default function MainApp(props) {
         touchZoom={true}
         zoomControl={false}
         scrollWheelZoom={true}
+        attributionControl={false}
       >
         <Map
           stazioni={stazioni}
@@ -148,6 +134,7 @@ export default function MainApp(props) {
           }}
         />
       </MapContainer>
+      <InfoDiv isBottomDivOpen={isBottomDivOpen} selected={selected} />
 
       <button
         className="absolute left-5 top-5 z-auto mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
@@ -155,8 +142,6 @@ export default function MainApp(props) {
       >
         <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
       </button>
-
-      <InfoDiv isBottomDivOpen={isBottomDivOpen} selected={selected} />
 
       <button
         className="absolute left-5 top-5 z-auto mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
