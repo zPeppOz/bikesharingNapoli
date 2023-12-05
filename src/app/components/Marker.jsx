@@ -1,59 +1,34 @@
-import React, { useEffect, useState } from "react";
-import {
-  AdvancedMarker,
-  InfoWindow,
-  Pin,
-  useAdvancedMarkerRef,
-} from "@vis.gl/react-google-maps";
+import React, { useState, useEffect } from "react";
+import L from "leaflet";
+import { Marker, Popup, useMapEvents, useMap, Circle } from "react-leaflet";
 
-export default function Marker(props) {
-  const [markerRef, marker] = useAdvancedMarkerRef();
-  const [isInfoWindowOpen, setIsInfoWindowOpen] = useState(false);
+export default function MapMarker({ obj, eventHandlers, icon }) {
+  const [isLoading, setIsLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (props.isOpen) {
-  //     setIsInfoWindowOpen(true);
-  //   }
-  //   if (!props.isOpen) {
-  //     setIsInfoWindowOpen(false);
-  //   }
-  // }, [props.isOpen]);
+  useEffect(() => {
+    if (obj) {
+      setIsLoading(false);
+    }
+  }, [obj]);
 
-  console.log(props.isOpen, props.markerProps.key);
-
-  console.log(props.children);
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <>
-      <AdvancedMarker
-        {...props.markerProps}
-        ref={markerRef}
-        position={props.position}
-        onClick={() => {
-          // setIsInfoWindowOpen(!isInfoWindowOpen);
-          props.onClick();
-        }}
+      <Marker
+        position={[obj.lat, obj.lng]}
+        icon={icon}
+        eventHandlers={eventHandlers}
       >
-        <Pin {...props.pinProps} />
-        {props.isOpen && (
-          <InfoWindow anchor={marker} onCloseClick={props.closeInfoWindow}>
-            {props.children}
-          </InfoWindow>
-        )}
-      </AdvancedMarker>
-      {/* <AdvancedMarker
-        {...props.markerProps}
-        ref={markerRef}
-        position={props.position}
-        onClick={props.onClick}
-      >
-        <Pin {...props.pinProps} />
-        {props.isInfoWindowOpen && (
-          <InfoWindow anchor={marker} onCloseClick={props.closeInfoWindow}>
-            {props.children}
-          </InfoWindow>
-        )}
-      </AdvancedMarker> */}
+        <Popup>{obj.id}</Popup>
+        <Circle
+          center={[obj.lat, obj.lng]}
+          radius={30}
+          color={obj.battery ? "#2596be" : "#38E443"}
+        />
+      </Marker>
     </>
   );
 }
