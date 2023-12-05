@@ -123,11 +123,6 @@ export default function MainApp(props) {
 
   return (
     <div className="h-screen w-screen overflow-hidden">
-      {isLoading && (
-        <div className="absolute left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-white">
-          <div className="h-32 w-32 animate-spin rounded-full border-b-2 border-t-2 border-gray-900"></div>
-        </div>
-      )}
       <MapContainer
         center={center}
         zoom={13}
