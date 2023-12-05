@@ -21,8 +21,8 @@ export default function Map({ biciclette, stazioni, handlers }) {
       !isLoading && map.locate();
     },
     click: (e) => {
-      handlers.hideBottomDiv();
       handlers.setSelected(null);
+      handlers.hideBottomDiv();
     },
   });
 
