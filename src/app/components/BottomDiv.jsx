@@ -23,7 +23,7 @@ export function BottomDiv(props) {
   return (
     <div
       ref={divRef}
-      className=" bottom-0 left-0 right-0 mx-auto mb-4 hidden h-40 w-2/3 overflow-hidden rounded-lg border border-blue-200 bg-slate-200 p-2 shadow-md"
+      className=" bottom-0 left-0 right-0 mx-auto mb-4 hidden h-40 w-2/3 overflow-hidden rounded-lg border border-blue-200 bg-gray-100 p-2 shadow-md"
     >
       {props.children}
     </div>

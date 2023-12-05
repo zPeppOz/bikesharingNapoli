@@ -4,6 +4,10 @@ body {
   overflow: hidden;
 }
 
+.leaflet-pane {
+  z-index: 0;
+}
+
 .hamburger {
   position: absolute;
   background-color: white;
