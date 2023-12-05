@@ -27,23 +27,41 @@ function StationInfo({ selected }) {
   );
 }
 
+import {
+  Battery2BarSharp,
+  Battery6BarSharp,
+  BatteryFullSharp,
+} from "@mui/icons-material";
+
 function BikeInfo({ selected }) {
   useEffect(() => {
-    selected.battery = selected.battery * 100;
-    console.log(selected.battery);
+    if (selected.battery < 1) {
+      selected.battery = selected.battery * 100;
+    }
+
+    return () => {};
   });
 
   return (
     <div className="flex flex-col items-stretch justify-between">
       <div className="flex flex-col items-start justify-start">
         <p className=" text-2xl font-semibold">NAPOLI-{selected.id}</p>
-        <p>
+        <p className="inline-flex flex-row">
           {selected.battery * 100 < 20 ? (
-            <span className="text-red-500">{selected.battery}%</span>
+            <>
+              <Battery2BarSharp className="rotate-90 text-red-500" />
+              <span className="text-red-500">{selected.battery}%</span>
+            </>
           ) : selected.battery < 60 ? (
-            <span className="text-yellow-500">{selected.battery}%</span>
+            <>
+              <Battery6BarSharp className="rotate-90 text-yellow-500" />
+              <span className="text-yellow-500">{selected.battery}%</span>
+            </>
           ) : (
-            <span className="text-green-500">{selected.battery}%</span>
+            <>
+              <BatteryFullSharp className="rotate-90 text-green-500" />
+              <span className="text-green-500">{selected.battery}%</span>
+            </>
           )}
         </p>
       </div>
