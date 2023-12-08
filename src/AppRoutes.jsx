@@ -5,6 +5,7 @@ import About from "./About";
 import MainApp from "./app/MainApp";
 import Registrazione from "./home/Registrati";
 import LoginPage from "./home/Login";
+import Dashbord from "./dashboard/Dashboard";
 
 function AppRoutes() {
   return (
@@ -13,6 +14,7 @@ function AppRoutes() {
       <Route path="/about" element={<About />} />
       <Route path="/app" element={<MainApp />} />
       <Route path="/Registrati" element={<Registrazione />} />
+      <Route path="/Dash" element={<Dashbord />} />
       {<Route path="/login" element={<LoginPage />} />}
     </Routes>
   );
