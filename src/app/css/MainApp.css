@@ -11,7 +11,7 @@ body {
 .hamburger {
   position: absolute;
   background-color: white;
-  height: 35%;
+  height: 100%;
   width: 50px;
   left: 0px;
   top: 70px;

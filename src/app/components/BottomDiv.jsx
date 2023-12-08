@@ -11,19 +11,20 @@ export function BottomDiv(props) {
       divRef.current.classList.add("slide-in-bottom");
     }
     if (!props.isOpen) {
-      divRef.current.classList.remove("slide-in-bottom");
       divRef.current.classList.add("slide-out-bottom");
+      divRef.current.classList.remove("slide-in-bottom");
       setTimeout(() => {
         divRef.current.classList.add("hidden");
         divRef.current.classList.remove("absolute");
-      }, 450);
+      }, 200);
     }
+    console.log("BottomDiv is open: ", props.isOpen);
   }, [props.isOpen]);
 
   return (
     <div
       ref={divRef}
-      className=" bottom-0 left-0 right-0 hidden h-40 overflow-hidden rounded-lg border border-blue-200 bg-gray-100 p-2 shadow-md md:mx-auto md:mb-4 md:h-40 md:w-2/3"
+      className=" bottom-0 left-0 right-0 hidden h-fit overflow-hidden rounded-lg border border-blue-200 bg-gray-100 p-2 px-2 py-4 shadow-md md:mx-auto md:mb-4 md:w-fit md:min-w-[40rem]"
     >
       {props.children}
     </div>

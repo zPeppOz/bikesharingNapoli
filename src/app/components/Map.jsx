@@ -56,27 +56,29 @@ export default function Map({ biciclette, stazioni, handlers }) {
           />
         );
       })}
-      {biciclette.map((bicicletta) => {
-        return (
-          <MapMarker
-            obj={{
-              lat: bicicletta.lastLat,
-              lng: bicicletta.lastLong,
-              ...bicicletta,
-            }}
-            eventHandlers={{
-              click: () => {
-                handlers.handleMarkerClick(bicicletta);
-              },
-              dblclick: () => {
-                map.setView([bicicletta.lastLat, bicicletta.lastLong], 25);
-                // map.invalidateSize();
-              },
-            }}
-            icon={bikeIcon}
-          />
-        );
-      })}
+      {biciclette
+        // .filter((el) => el.isVisible === true)
+        .map((bicicletta) => {
+          return (
+            <MapMarker
+              obj={{
+                lat: bicicletta.lastLat,
+                lng: bicicletta.lastLong,
+                ...bicicletta,
+              }}
+              eventHandlers={{
+                click: () => {
+                  handlers.handleMarkerClick(bicicletta);
+                },
+                dblclick: () => {
+                  map.setView([bicicletta.lastLat, bicicletta.lastLong], 25);
+                  // map.invalidateSize();
+                },
+              }}
+              icon={bikeIcon}
+            />
+          );
+        })}
     </>
   );
 }

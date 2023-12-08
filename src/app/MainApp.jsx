@@ -7,6 +7,7 @@ import { MapContainer } from "react-leaflet";
 import biciclette from "./data/biciclette.json";
 import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { FaUser } from "react-icons/fa";
 import SectionMenu from "./components/SectionMenu.jsx";
 
@@ -134,43 +135,63 @@ export default function MainApp(props) {
           }}
         />
       </MapContainer>
+
       <InfoDiv isBottomDivOpen={isBottomDivOpen} selected={selected} />
-
-      <button
-        className="absolute left-5 top-5 z-auto mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
-        onClick={toggleMenu}
-      >
-        <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
-      </button>
-
-      <button
-        className="absolute left-5 top-5 z-auto mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
-        onClick={toggleMenu}
-      >
-        <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
-      </button>
-
-      {isMenuOpen && (
-        <div className="hamburger">
-          <ul id="menu">
-            {menuSections.map((section, index) => (
-              <li key={section.id}>
-                <a
-                  onClick={() => {
-                    //chiude il menu
-                    toggleMenu();
-                    toggleSectionMenu();
-                    setSectionIndex(index);
+      <div className="h-full w-fit ">
+        <button
+          className="absolute left-5 top-5 z-50 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
+          onClick={toggleMenu}
+        >
+          <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
+        </button>
+        {isMenuOpen && (
+          <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4">
+            <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
+              <p className="mt-1">Ciao </p>
+              <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
+                <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
+                  <p className="ap-px text-center text-xs font-extralight text-white">
+                    3
+                  </p>
+                </div>
+                <NotificationsNoneIcon
+                  style={{
+                    fontSize: "24px",
                   }}
+                />
+              </div>
+            </div>
+            <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
+              {/* <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p>
+              <p>Test</p> */}
+              {menuSections.map((section, index) => (
+                <div
+                  key={section.id}
+                  className=" flex flex-row items-center justify-start"
                 >
-                  {section.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {isSectionMenuOpen && <SectionMenu data={menuSections[i].data} />}
+                  <button
+                    onClick={() => {
+                      //chiude il menu
+                      toggleMenu();
+                      toggleSectionMenu();
+                      setSectionIndex(index);
+                    }}
+                    className="flex flex-row items-center justify-start"
+                  >
+                    <p className="text-lg font-semibold ">{section.label}</p>
+                  </button>
+                </div>
+              ))}
+
+              {isSectionMenuOpen && <SectionMenu data={menuSections[i].data} />}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
