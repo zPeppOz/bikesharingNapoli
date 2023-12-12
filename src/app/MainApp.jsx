@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 import L from "leaflet";
 import Map from "./components/Map.jsx";
 import { MapContainer } from "react-leaflet";
-
-import biciclette from "./data/biciclette.json";
-import stazioni from "./data/stazioni.json";
+import { GlobalContext } from "../providers/GlobalContext.jsx";
+// import biciclette from "./data/biciclette.json";
+// import stazioni from "./data/stazioni.json";
 import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { FaUser } from "react-icons/fa";
@@ -20,6 +20,7 @@ import ShowMarkers from "./components/ShowMarkers.jsx";
 import { InfoDiv } from "./components/InfoDiv.jsx";
 
 export default function MainApp(props) {
+  const { biciclette, stazioni } = useContext(GlobalContext);
   const menuSections = [
     {
       id: 1,
