@@ -1,12 +1,9 @@
 import React, { useState, useContext } from "react";
 import { MapContainer } from "react-leaflet";
 import "./css/Dashboard.css";
-// Importa JSON
-import bicicletteData from "../app/data/biciclette.json";
-import stazioni from "../app/data/stazioni.json";
-import ticket from "../app/data/ticket.json";
 import { DataGrid } from "@mui/x-data-grid";
 import { GlobalContext } from "../providers/GlobalContext";
+
 //oggetto per la visualizzazione dei ticket presi dal JSON
 const colonneTicket = [
   { field: "id", headerName: "ID", width: 150 },
@@ -120,7 +117,7 @@ export default function Dashboard() {
         {isTicketOpen && (
           <div className="ticket">
             <h1> TICKET </h1>
-            <div style={{ height: 400, width: "100%" }}>
+            <div style={{ height: "100%", width: "100%" }}>
               <DataGrid
                 rows={ticket}
                 columns={colonneTicket}
