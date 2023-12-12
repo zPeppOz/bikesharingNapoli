@@ -1,20 +1,11 @@
 import React, { useState, useContext, useEffect } from "react";
-import { MapContainer } from "react-leaflet";
 import "./css/Dashboard.css";
-<<<<<<< HEAD
-=======
-// Importa JSON
->>>>>>> 1cce4446fb8c304dea8823850596ea2f170d1330
-import { DataGrid } from "@mui/x-data-grid";
+import DataGridComponent from "./components/DataGridComponent";
 import { GlobalContext } from "../providers/GlobalContext";
 
+///array per i ticket preso dal globalcontext
+
 //oggetto per la visualizzazione dei ticket presi dal JSON
-const colonneTicket = [
-  { field: "id", headerName: "ID", width: 150 },
-  { field: "Bicicleta", headerName: "Bicicleta", width: 150 },
-  { field: "data", headerName: "Data", width: 150 },
-  { field: "descrizione", headerName: "Descrizione", width: 300 },
-];
 
 export default function Dashboard() {
   const { bici, stazioni, ticket, dispatch } = useContext(GlobalContext);
@@ -22,6 +13,28 @@ export default function Dashboard() {
   const [isStazioniOpen, setStazioniOpen] = useState(false);
   const [isTicketOpen, setTicketOpen] = useState(false);
   const value = useContext(GlobalContext);
+
+  const colonneBiciclette = [
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "lastLat", headerName: "Latitudine", width: 150 },
+    { field: "lastLong", headerName: "Longitudine", width: 150 },
+    { field: "battery", headerName: "battery", width: 300 },
+  ];
+
+  const colonneStazioni = [
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "name", headerName: "Nome", width: 150 },
+    { field: "lat", headerName: "Latitudine", width: 150 },
+    { field: "lng", headerName: "Longitudine", width: 300 },
+  ];
+
+  const colonneTicket = [
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "Bicicleta", headerName: "Bici", width: 150 },
+    { field: "data", headerName: "Data", width: 150 },
+    { field: "descrizione", headerName: "descrizione", width: 300 },
+  ];
+
   // Stato per le biciclette
 
   const toggleBiciclette = () => {
@@ -42,14 +55,14 @@ export default function Dashboard() {
     setStazioniOpen(false);
   };
 
-  const handleRemoveItemBike = (id) => {
-    const index = bici.findIndex((item) => item.id === id);
-    dispatch({ type: "removeBici", payload: index });
-  };
+  // const handleRemoveItemBike = (id) => {
+  //   const index = bici.findIndex((item) => item.id === id);
+  //   dispatch({ type: "removeBici", payload: index });
+  // };
 
-  useEffect(() => {
-    console.log("Bici", bici);
-  }, [bici]);
+  // useEffect(() => {
+  //   console.log("Bici", bici);
+  // }, [bici]);
 
   return (
     <div className="dashboard-container">
@@ -70,63 +83,27 @@ export default function Dashboard() {
         {isBicicletteOpen && (
           <div className="biciclette">
             <h1> BICICLETTE </h1>
-            <ul>
-              {bici?.map((item) => (
-                <li key={item.id}>
-                  <p>
-                    ID: <a>{item.id}</a>
-                  </p>
-                  <p>
-                    LATITUDINE: <a>{item.lastLat}</a>
-                  </p>
-                  <p>
-                    LONGITUDINE: <a>{item.lastLong}</a>
-                  </p>
-                  <p>
-                    BATTERIA: <a>{item.battery}</a>
-                  </p>
-                  <button onClick={() => handleRemoveItemBike(item.id)}>
-                    RIMUOVI
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <div style={{ height: "100%", width: "90%" }}>
+              <DataGridComponent rows={bici} columns={colonneBiciclette} />
+            </div>
           </div>
         )}
 
         {isStazioniOpen && (
           <div className="stazioni">
             <h1> STAZIONI </h1>
-            <ul>
-              {stazioni.map((item) => (
-                <li key={item.id}>
-                  <p>
-                    NOME: <a>{item.name}</a>
-                  </p>
-                  <p>
-                    LATITUDINE: <a>{item.lat}</a>
-                  </p>
-                  <p>
-                    LONGITUDINE: <a>{item.lng}</a>
-                  </p>
-                  <p>N. BICICLETTE:</p>
-                  <a>{item.bikes.length}</a>
-                </li>
-              ))}
-            </ul>
+            <div style={{ height: "100%", width: "90%" }}>
+              <DataGridComponent rows={stazioni} columns={colonneStazioni} />
+            </div>
           </div>
         )}
 
         {isTicketOpen && (
           <div className="ticket">
             <h1> TICKET </h1>
-            <div style={{ height: "100%", width: "100%" }}>
-              <DataGrid
-                rows={ticket}
-                columns={colonneTicket}
-                pageSize={5}
-                checkboxSelection
-              />
+            <div style={{ height: "100%", width: "90%" }}>
+              {/* Richiama il componente DataGridComponent con i dati del ticket */}
+              <DataGridComponent rows={ticket} columns={colonneTicket} />
             </div>
           </div>
         )}
