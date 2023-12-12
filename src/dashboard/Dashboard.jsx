@@ -1,10 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { MapContainer } from "react-leaflet";
 import "./css/Dashboard.css";
 // Importa JSON
-import bicicletteData from "../app/data/biciclette.json";
-import stazioni from "../app/data/stazioni.json";
-import ticket from "../app/data/ticket.json";
 import { DataGrid } from "@mui/x-data-grid";
 import { GlobalContext } from "../providers/GlobalContext";
 //oggetto per la visualizzazione dei ticket presi dal JSON
@@ -16,17 +13,12 @@ const colonneTicket = [
 ];
 
 export default function Dashboard() {
-  const {
-    biciclette: bicicletteData,
-    stazioni,
-    ticket,
-  } = useContext(GlobalContext);
+  const { bici, stazioni, ticket, dispatch } = useContext(GlobalContext);
   const [isBicicletteOpen, setBicicletteOpen] = useState(false);
   const [isStazioniOpen, setStazioniOpen] = useState(false);
   const [isTicketOpen, setTicketOpen] = useState(false);
-
+  const value = useContext(GlobalContext);
   // Stato per le biciclette
-  const [biciclette, setBiciclette] = useState(bicicletteData);
 
   const toggleBiciclette = () => {
     setBicicletteOpen(true);
@@ -47,9 +39,13 @@ export default function Dashboard() {
   };
 
   const handleRemoveItemBike = (id) => {
-    const updatedBiciclette = biciclette.filter((item) => item.id !== id);
-    setBiciclette(updatedBiciclette);
+    const index = bici.findIndex((item) => item.id === id);
+    dispatch({ type: "removeBici", payload: index });
   };
+
+  useEffect(() => {
+    console.log("Bici", bici);
+  }, [bici]);
 
   return (
     <div className="dashboard-container">
@@ -71,7 +67,7 @@ export default function Dashboard() {
           <div className="biciclette">
             <h1> BICICLETTE </h1>
             <ul>
-              {biciclette.map((item) => (
+              {bici?.map((item) => (
                 <li key={item.id}>
                   <p>
                     ID: <a>{item.id}</a>
