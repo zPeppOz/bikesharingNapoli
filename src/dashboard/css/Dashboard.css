@@ -1,0 +1,104 @@
+/* Sidebar Styles */
+.sidebar {
+  background-color: whitesmoke;
+  color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px; /* Modificato il padding per una maggiore leggibilità */
+  box-sizing: border-box;
+  width: 150px;
+  height: 100%;
+  border-right: 3px solid #e7e7e7;
+}
+.sidebar ul {
+  margin-top: 30px;
+  padding: 2px;
+}
+.sidebar li {
+  margin-top: 50px;
+  font-size: 20px; /* Modificato il modo di impostare la dimensione del font */
+  border-bottom: 2px solid rgb(142, 142, 142);
+}
+
+.sidebar li:hover {
+  color: grey;
+  /* ZOOM */
+  transform: scale(1.1);
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: whitesmoke;
+  position: fixed;
+  top: 0;
+  left: 150px;
+  width: calc(
+    100% - 150px
+  ); /* Utilizzo di calc per calcolare la larghezza rimanente */
+  padding: 20px;
+  border-bottom: 3px solid #e7e7e7;
+}
+
+.navbar input[type="text"] {
+  font-size: 15px;
+  padding: 5px 10px;
+  width: 60%;
+  border-radius: 10px;
+  border: 2px solid #e7e7e7;
+}
+
+/* Main Content Styles */
+.maincontent {
+  position: fixed;
+  top: 100px;
+  left: 180px;
+  width: calc(100% - 150px);
+  padding: 20px;
+  background-color: white;
+  overflow-y: auto; /* Aggiunto overflow-y per la scrollbar quando il contenuto supera l'altezza */
+  /* LINEA CHE SEPARA  */
+}
+.maincontent h1 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.maincontent p {
+  display: inline-block;
+  font-size: 15px;
+  line-height: 25px;
+}
+
+.maincontent a {
+  display: inline-block;
+  margin-right: 50px;
+  font-size: 15px;
+  /* grassetto */
+  font-weight: bold;
+}
+.maincontent li {
+  padding-bottom: 30px;
+  /* distanza tra gli elementi */
+  margin-bottom: 20px;
+}
+
+.maincontent button {
+  font-size: 13px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: 2px solid #e7e7e7;
+  background-color: #e7e7e7;
+  cursor: pointer;
+  background-color: red;
+  /* colore font */
+  color: white;
+  border-color: red;
+}
+
+.maincontent button:hover {
+  background-color: #f75b5b;
+  border-color: #f75b5b;
+  cursor: pointer;
+}
