@@ -12,6 +12,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
+    "@mui/x-data-grid": "^6.18.4",
     "@react-google-maps/api": "^2.19.2",
     "@uidotdev/usehooks": "^2.4.1",
     "@vis.gl/react-google-maps": "^0.3.3",

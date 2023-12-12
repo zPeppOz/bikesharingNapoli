@@ -5,8 +5,18 @@ import "./css/Dashboard.css";
 import bicicletteData from "../app/data/biciclette.json";
 import stazioni from "../app/data/stazioni.json";
 import ticket from "../app/data/ticket.json";
+import { DataGrid } from "@mui/x-data-grid";
 
 export default function Dashboard() {
+  //oggetto per la visualizzazione dei ticket presi dal JSON
+
+  const colonneTicket = [
+    { field: "id", headerName: "ID", width: 150 },
+    { field: "Bicicleta", headerName: "Bicicleta", width: 150 },
+    { field: "data", headerName: "Data", width: 150 },
+    { field: "descrizione", headerName: "Descrizione", width: 300 },
+  ];
+
   const [isBicicletteOpen, setBicicletteOpen] = useState(false);
   const [isStazioniOpen, setStazioniOpen] = useState(false);
   const [isTicketOpen, setTicketOpen] = useState(false);
@@ -106,6 +116,14 @@ export default function Dashboard() {
         {isTicketOpen && (
           <div className="ticket">
             <h1> TICKET </h1>
+            <div style={{ height: 400, width: "100%" }}>
+              <DataGrid
+                rows={ticket}
+                columns={colonneTicket}
+                pageSize={5}
+                checkboxSelection
+              />
+            </div>
           </div>
         )}
       </div>
