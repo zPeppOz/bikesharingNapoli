@@ -3,7 +3,7 @@ import prenotazioni from "../data/prenotazioni.json";
 import stazioni from "../data/stazioni.json";
 import utenti from "../data/utenti.json";
 import ticket from "../data/ticket.json";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { GlobalContext } from "./GlobalContext";
 
 export default function GlobalContextProvider({ children }) {
@@ -42,7 +42,7 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "removeBici":
-        state.bici.splice(action.payload, 1);
+        state.bici?.splice(action.payload, 1);
         return {
           ...state,
           bici: {
@@ -129,7 +129,6 @@ export default function GlobalContextProvider({ children }) {
             ...state.ticket,
           },
         };
-
       default:
         return state;
     }
@@ -146,13 +145,8 @@ export default function GlobalContextProvider({ children }) {
   return (
     <GlobalContext.Provider
       value={{
-        state,
+        ...state,
         dispatch,
-        biciclette,
-        utenti,
-        ticket,
-        stazioni,
-        prenotazioni,
       }}
     >
       {children}
