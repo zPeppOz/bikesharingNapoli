@@ -24,50 +24,48 @@ export const useBikeSharing = () => {
     return state.bici[idBici].isReserved;
   };
 
-  const prenotaBicicletta = (idBici, idUtente) => {
-    const nuovaPrenotazione = {
-      id: generateUniqueID(),
-      biciId: idBici,
-      utenteId: idUtente,
-      oraPrenotazione: new Date(),
-    };
-    console.log(nuovaPrenotazione);
-    const bici = state.bici.find((bici) => bici.id === idBici);
-    const utente = state.utenti.find((utente) => utente.id === idUtente);
-    dispatch({
-      type: "updateBici",
-      payload: { ...bici, isReserved: true },
-    });
-    dispatch({
-      type: "updateUtente",
-      payload: {
-        ...utente,
-        prenotazioni: [...utente.prenotazioni, nuovaPrenotazione.id],
-      },
-    });
-    dispatch({ type: "addPrenotazione", payload: nuovaPrenotazione });
-  };
+  // const prenotaBicicletta = (idBici, idUtente) => {
+  //   const nuovaPrenotazione = {
+  //     id: generateUniqueID(),
+  //     biciId: idBici,
+  //     utenteId: idUtente,
+  //     oraPrenotazione: new Date(),
+  //   };
+  //   console.log(nuovaPrenotazione);
+  //   const bici = state.bici.find((bici) => bici.id === idBici);
+  //   console.log(state.utenti);
+  //   const utente = state.utenti.find((utente) => utente.id === idUtente);
 
-  const iniziaCorsa = (idPrenotazione) => {
+  //   utente.prenotazioni.push(nuovaPrenotazione.id);
+  //   dispatch({
+  //     type: "updateBici",
+  //     payload: { ...bici, isReserved: true },
+  //   });
+  //   dispatch({
+  //     type: "updateUtente",
+  //     payload: {
+  //       utente,
+  //     },
+  //   });
+  //   dispatch({ type: "addPrenotazione", payload: nuovaPrenotazione });
+  // };
+
+  const iniziaCorsa = (idBici, idUtente) => {
     // dispatch({
     //   type: "updatePrenotazione",
     //   payload: { id: idPrenotazione, inizioCorsa: new Date() },
     // });
-    const prenotazione = state.prenotazioni.find((prenotazione) => {
-      return prenotazione.id === idPrenotazione;
-    });
+
     const newCorsa = {
       ...corsa,
       id: generateUniqueID(),
-      biciId: prenotazione.biciId,
-      utenteId: prenotazione.utenteId,
-      prenotazioneId: prenotazione.id,
+      biciId: idBici,
+      utenteId: idUtente,
+
       inizio: new Date(),
       inizioCorsa: new Date(),
     };
-    const biciInUso = state.bici.find(
-      (bici) => bici.id === state.prenotazioni[idPrenotazione].biciId
-    );
+    const biciInUso = state.bici.find((bici) => bici.id === idBici);
     dispatch({ type: "addCorsa", payload: newCorsa });
     dispatch({
       type: "updateBici",
@@ -95,7 +93,7 @@ export const useBikeSharing = () => {
   };
 
   return {
-    prenotaBicicletta,
+    // prenotaBicicletta,
     iniziaCorsa,
     terminaCorsa,
     isBikeAvailable,
