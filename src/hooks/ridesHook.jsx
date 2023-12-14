@@ -75,15 +75,17 @@ export const useBikeSharing = () => {
 
   const terminaCorsa = (idCorsa, costo) => {
     const fineCorsa = new Date();
-    const durata = (fineCorsa - new Date(prenotazione.inizioCorsa)) / 1000;
+    const corsa = state.corse.find((corsa) => corsa.id === idCorsa);
+    const durata = (fineCorsa - new Date(corsa.inizioCorsa)) / 1000;
     dispatch({
       type: "updateCorsa",
       payload: { id: idCorsa, fineCorsa, costo, durata },
     });
     dispatch({
       type: "updateBici",
-      payload: { id: prenotazione.biciId, isAvailable: true },
+      payload: { id: corsa.biciId, isAvailable: true },
     });
+    console.log(state);
   };
 
   const generateUniqueID = () => {

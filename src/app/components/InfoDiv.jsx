@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useState } from "react";
 //importa css
 import { BottomDiv } from "./BottomDiv.jsx";
@@ -200,12 +200,15 @@ import {
   Battery5BarSharp,
   Battery6BarSharp,
   ReportProblemSharp,
+  EuroSharp,
 } from "@mui/icons-material";
+import TimerSharpIcon from "@mui/icons-material/TimerSharp";
 import { useBikeSharing } from "../../hooks/ridesHook.jsx";
+import { GlobalContext } from "../../providers/GlobalContext.jsx";
 
 function BikeInfo({ selected, handlers }) {
-  const { iniziaCorsa, isBikeAvailable } = useBikeSharing();
-
+  const { iniziaCorsa, isBikeAvailable, terminaCorsa } = useBikeSharing();
+  const { state } = useContext(GlobalContext);
   useEffect(() => {
     if (selected.battery < 1) {
       selected.battery = selected.battery * 100;
@@ -215,41 +218,61 @@ function BikeInfo({ selected, handlers }) {
     return () => {};
   });
 
-  const batteryIcon = (battery) => {
+  function BatteryIcon({ battery, variant }) {
     if (battery < 1) {
       battery = battery * 100;
       battery = Math.round(battery);
     }
     if (battery < 20) {
       return (
-        <p className="inline-flex h-fit w-20 flex-row">
-          <Battery1BarSharp className="rotate-90 text-red-500" />
+        <p
+          className={
+            "inline-flex h-fit w-fit items-center justify-center " +
+            (variant === "row" ? "flex-row" : "flex-col")
+          }
+        >
+          <Battery1BarSharp className="!h-48 !w-auto rotate-90 text-red-500" />
           <span className="text-red-500">{battery}%</span>
         </p>
       );
     } else if (battery < 40) {
       return (
-        <p className="inline-flex h-fit  flex-row">
-          <Battery3BarSharp className="rotate-90 text-orange-500" />
+        <p
+          className={
+            "inline-flex h-fit w-fit items-center justify-center " +
+            (variant === "row" ? "flex-row" : "flex-col")
+          }
+        >
+          <Battery3BarSharp className="!h-12 !w-auto rotate-90 text-orange-500" />
           <span className="text-orange-500">{battery}%</span>
         </p>
       );
     } else if (battery < 60) {
       return (
-        <p className="inline-flex h-fit  flex-row">
-          <Battery5BarSharp className="rotate-90 text-yellow-500" />
+        <p
+          className={
+            "inline-flex h-fit w-fit items-center justify-center " +
+            (variant === "row" ? "flex-row" : "flex-col")
+          }
+        >
+          <Battery5BarSharp className="!h-12 !w-auto rotate-90 text-yellow-500" />
           <span className="text-yellow-500">{battery}%</span>
         </p>
       );
     } else {
       return (
-        <p className="inline-flex  flex-row">
-          <Battery6BarSharp className="rotate-90 text-green-500" />
+        <p
+          className={
+            "inline-flex h-fit w-fit items-center justify-center " +
+            (variant === "row" ? "flex-row" : "flex-col")
+          }
+        >
+          <Battery6BarSharp className="!h-12 !w-auto rotate-90 text-green-500" />
           <span className="text-green-500">{battery}%</span>
         </p>
       );
     }
-  };
+  }
   console.log(mastercard);
 
   const [isReserved, setIsReserved] = useState(false);
@@ -267,6 +290,62 @@ function BikeInfo({ selected, handlers }) {
   const handleRemoveContainer = () => {
     setRemoveContainer(!removeContainer);
   };
+  const [corsa, setCorsa] = useState({});
+  const [tempo, setTempo] = useState("00:00");
+  const [costo, setCosto] = useState("0.00");
+
+  const calcolaTempo = () => {
+    let ora = new Date();
+    let diff = ora - corsa.inizioCorsa;
+    let minuti = Math.floor(diff / 60000);
+    let secondi = Math.floor((diff - minuti * 60000) / 1000);
+    // 00:00
+    if (minuti < 10) {
+      minuti = "0" + minuti;
+    }
+    if (secondi < 10) {
+      secondi = "0" + secondi;
+    }
+    setTempo(minuti + ":" + secondi);
+  };
+
+  const calcolaCosto = () => {
+    let costo = 0.8;
+    let ora = new Date();
+    let diff = ora - corsa.inizioCorsa;
+    let minuti = Math.floor(diff / 60000);
+    // tariffa 0.30/minuto, gratis i primi 2 minuti
+    if (minuti > 2) {
+      minuti -= 2;
+    } else {
+      minuti = 0;
+    }
+    costo += minuti * 0.3;
+    setCosto(costo.toFixed(2));
+  };
+
+  useEffect(() => {
+    if (corsa.inizioCorsa) {
+      // calcola il tempo ogni secondo
+      const interval = setInterval(() => {
+        calcolaTempo();
+        calcolaCosto();
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [corsa]);
+
+  useEffect(() => {
+    if (!removeContainer) {
+      let c = state.corse.find((corsa) => corsa.biciId === selected.id);
+      console.log(c);
+      setCorsa(c);
+    }
+
+    return () => {
+      setCorsa({});
+    };
+  }, [removeContainer]);
 
   return (
     <div>
@@ -277,7 +356,7 @@ function BikeInfo({ selected, handlers }) {
               <div className="flex flex-col items-start justify-start">
                 <p className=" text-2xl font-semibold">NAPOLI-{selected.id}</p>
                 <div className="flex flex-row items-center justify-start">
-                  {batteryIcon(selected.battery)}
+                  <BatteryIcon battery={selected.battery} variant="row" />
                   <p className="ml-2 text-sm font-light text-gray-400">
                     ({selected.autonomia} km di autonomia)
                   </p>
@@ -299,12 +378,7 @@ function BikeInfo({ selected, handlers }) {
                   className="-mt-2 h-auto w-24 object-contain object-center md:w-28"
                   alt="bike"
                 />
-                <button className="flex flex-row items-center rounded-xl border bg-gray-300 p-2 ">
-                  <ReportProblemSharp className="text-gray-600 " />
-                  <p className="ml-1 text-xs text-gray-600">
-                    Segnala un problema
-                  </p>
-                </button>
+                <ReportButton />
               </div>
             </div>
 
@@ -342,12 +416,46 @@ function BikeInfo({ selected, handlers }) {
           </div>
         </>
       )}
+      {!removeContainer && (
+        <div className="flex h-full w-full flex-col items-center justify-evenly gap-4 p-2">
+          <div className="flex w-full flex-row items-center justify-evenly gap-2">
+            <p className="flex flex-col items-center justify-center">
+              <BatteryIcon battery={selected.battery} variant="col" />
+            </p>
+            <p className="flex flex-col items-center justify-center">
+              <TimerSharpIcon className="!h-12 !w-auto text-gray-600" />
+              {tempo}
+            </p>
+            <p className="flex flex-col items-center justify-center">
+              <EuroSharp className="!h-12 !w-auto text-gray-600" />€{costo}
+            </p>
+          </div>
+          <div className="flex h-full w-full flex-row items-center justify-around">
+            <ReportButton className="w-full justify-center" />
+            <button
+              className="flex h-full w-full flex-row items-center justify-center rounded-xl border bg-red-500 p-2"
+              onClick={() => {
+                // ferma la corsa
+                terminaCorsa(corsa.id, costo);
+                handleRemoveContainer();
+              }}
+            >
+              <p className="text-md  text-gray-200">Interrompi Corsa</p>
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
-function ReportButton() {
+function ReportButton(props) {
   return (
-    <button className="flex flex-row items-center rounded-xl border bg-gray-300 p-2 ">
+    <button
+      className={
+        "flex flex-row items-center rounded-xl border bg-gray-300 p-2 " +
+        (props.className && props.className)
+      }
+    >
       <ReportProblemSharp className="text-gray-600 " />
       <p className="ml-1 text-xs text-gray-600">Segnala un problema</p>
     </button>

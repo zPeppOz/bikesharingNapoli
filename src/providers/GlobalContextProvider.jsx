@@ -58,14 +58,15 @@ export default function GlobalContextProvider({ children }) {
         };
 
       case "updateBici":
-        const indexBici = state.bici.findIndex(
-          (bici) => bici.id === action.payload.id
-        );
-        state.bici[indexBici] = action.payload;
+        // input: {id: 1, isAvailable: true}
+
+        // find index of object
+        const bici = state.bici.find((bici) => bici.id === action.payload.id);
         return {
           ...state,
-          bici: [...state.bici],
+          bici: [...state.bici, { ...bici, ...action.payload }],
         };
+
       case "addPrenotazione":
         return {
           ...state,
