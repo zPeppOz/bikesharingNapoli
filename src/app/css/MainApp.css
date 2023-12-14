@@ -161,7 +161,7 @@ ul#menu li:hover {
   background-color: rgb(255, 255, 255);
   left: 290px;
   top: 20px;
-  width: 200px;
+  width: 250px;
   height: 200px;
   border-radius: 10px;
   overflow: auto; /* Abilita lo scrolling quando il contenuto supera la dimensione fissa */
@@ -169,15 +169,15 @@ ul#menu li:hover {
 
 .notifiche p {
   display: flex;
-  justify-content: center;
-  gap: 25px;
+  justify-content: space-between;
+  padding-left: 0.5rem;
+  padding-right: 1.5rem;
   margin-left: 5px;
   align-items: center;
   top: 5px;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
   align-items: center;
-
   border-bottom: 1.4px solid rgb(85, 85, 85);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
@@ -185,16 +185,4 @@ ul#menu li:hover {
 
 .notifiche button {
   color: red;
-}
-
-.arrow-up {
-  position: absolute;
-  width: 0;
-  height: 0;
-  border-left: 10px solid transparent;
-  border-right: 10px solid transparent;
-  border-bottom: 10px solid rgb(255, 255, 255);
-  top: 10px;
-  left: -7%;
-  transform: rotate(270deg);
 }

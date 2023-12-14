@@ -121,17 +121,11 @@ export default function MainApp(props) {
     setNotificationsOpen(!isNotificationsOpen);
   };
 
-  //funzione per gestire la visibilità delle notifiche
-
-  //stato per il numero casuale
-
-  //stato per la frase casuale
-
   // Funzione per gestire la visibilità delle notifiche
   const [notificationPhrases, setNotificationPhrases] = useState([]);
 
   useEffect(() => {
-    const phrases = ["Hai una promozione!!", "Frase 2", "Frase 3"];
+    const phrases = ["Notifica 1", "Notifica 2", "Notifica 3"];
 
     const intervalId = setInterval(() => {
       const randomIndex = Math.floor(Math.random() * phrases.length);
@@ -145,9 +139,13 @@ export default function MainApp(props) {
     return () => clearInterval(intervalId);
   }, []); // Assicura che l'effetto venga eseguito solo una volta durante il montaggio del componente
 
-  // Funzione che genera una frase casuale ogni 5 secondi
-
-  //funzione che genera un numero random da 0 a 10 ogni 5 secondi
+  // funzione che rimuove la notifica
+  const handleRemoveNotification = (index) => {
+    // Rimuovi la notifica dall'array
+    setNotificationPhrases((prevPhrases) =>
+      prevPhrases.filter((_, i) => i !== index)
+    );
+  };
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -187,11 +185,13 @@ export default function MainApp(props) {
             <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
               <p className="mt-1">Ciao, {loggedUser?.nome}</p>
               <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
-                <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
-                  <p className="ap-px text-center text-xs font-extralight text-white">
-                    3
-                  </p>
-                </div>
+                {notificationPhrases.length > 0 && (
+                  <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
+                    <p className="ap-px text-center text-xs font-extralight text-white">
+                      {notificationPhrases.length}
+                    </p>
+                  </div>
+                )}
                 <NotificationsNoneIcon
                   style={{
                     fontSize: "24px",
@@ -200,10 +200,15 @@ export default function MainApp(props) {
                 />
                 <div>
                   {isNotificationsOpen && (
-                    <div className=" notifiche">
+                    <div className=" notifiche ">
                       {notificationPhrases.map((phrase, index) => (
                         <p key={index}>
-                          {phrase} <button> X </button>
+                          {phrase}
+                          <button
+                            onClick={() => handleRemoveNotification(index)}
+                          >
+                            X
+                          </button>
                         </p>
                       ))}
                     </div>
