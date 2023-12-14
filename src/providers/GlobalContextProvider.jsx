@@ -42,13 +42,15 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "removeBici":
-        state.bici?.splice(action.payload, 1);
+        // remove by id
+        state.bici.filter((bici) => bici.id !== action.payload);
         return {
           ...state,
           bici: {
             ...state.bici,
           },
         };
+
       case "updateBici":
         state.bici[action.payload.id] = action.payload;
         return {
@@ -141,6 +143,10 @@ export default function GlobalContextProvider({ children }) {
     utenti: utenti,
     ticket: ticket,
   });
+
+  useEffect(() => {
+    console.log(state);
+  }, [state]);
 
   return (
     <GlobalContext.Provider

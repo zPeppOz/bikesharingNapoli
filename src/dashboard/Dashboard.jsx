@@ -1,10 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { MapContainer } from "react-leaflet";
 import "./css/Dashboard.css";
-<<<<<<< HEAD
-=======
 // Importa JSON
->>>>>>> 1cce4446fb8c304dea8823850596ea2f170d1330
 import { DataGrid } from "@mui/x-data-grid";
 import { GlobalContext } from "../providers/GlobalContext";
 
@@ -43,8 +40,7 @@ export default function Dashboard() {
   };
 
   const handleRemoveItemBike = (id) => {
-    const index = bici.findIndex((item) => item.id === id);
-    dispatch({ type: "removeBici", payload: index });
+    dispatch({ type: "removeBici", payload: id });
   };
 
   useEffect(() => {
@@ -71,7 +67,7 @@ export default function Dashboard() {
           <div className="biciclette">
             <h1> BICICLETTE </h1>
             <ul>
-              {bici?.map((item) => (
+              {bici.map((item) => (
                 <li key={item.id}>
                   <p>
                     ID: <a>{item.id}</a>
