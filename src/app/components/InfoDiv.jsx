@@ -202,7 +202,8 @@ import {
 import { useBikeSharing } from "../../hooks/ridesHook.jsx";
 
 function BikeInfo({ selected }) {
-  const { prenotaBicicletta, isBikeAvailable } = useBikeSharing();
+  const { iniziaCorsa, isBikeAvailable } = useBikeSharing();
+
   useEffect(() => {
     if (selected.battery < 1) {
       selected.battery = selected.battery * 100;
@@ -288,10 +289,7 @@ function BikeInfo({ selected }) {
             className="-mt-2 h-auto w-24 object-contain object-center md:w-28"
             alt="bike"
           />
-          <button className="flex flex-row items-center rounded-xl border bg-gray-300 p-2 ">
-            <ReportProblemSharp className="text-gray-600 " />
-            <p className="ml-1 text-xs text-gray-600">Segnala un problema</p>
-          </button>
+          <ReportButton />
         </div>
       </div>
 
@@ -302,7 +300,6 @@ function BikeInfo({ selected }) {
               className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
               disabled={!isBikeAvailable(selected.id)}
               onClick={() => {
-                prenotaBicicletta(selected.id, 1);
                 handleIsReserved();
                 handleRemovePrenota();
               }}
@@ -313,14 +310,25 @@ function BikeInfo({ selected }) {
           </>
         )}
         {isReserved && (
-          <>
-            <button className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1">
-              <p className="font-semibold- text-lg">INIZIA CORSA</p>
-              <p className="text-md font-normal">muoviti dio</p>
-            </button>
-          </>
+          <button
+            className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1"
+            onClick={() => {
+              iniziaCorsa(selected.id, 1);
+            }}
+          >
+            <p className="font-semibold- text-lg">INIZIA CORSA</p>
+            <p className="text-md font-normal">muoviti dio</p>
+          </button>
         )}
       </div>
     </div>
+  );
+}
+function ReportButton() {
+  return (
+    <button className="flex flex-row items-center rounded-xl border bg-gray-300 p-2 ">
+      <ReportProblemSharp className="text-gray-600 " />
+      <p className="ml-1 text-xs text-gray-600">Segnala un problema</p>
+    </button>
   );
 }

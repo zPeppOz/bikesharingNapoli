@@ -122,10 +122,6 @@ export default function GlobalContextProvider({ children }) {
           loggedUser: action.payload,
         };
       case "updateUtente":
-        const indexUtente = state.utenti.findIndex(
-          (utente) => utente.id === action.payload.id
-        );
-        state.utenti[indexUtente] = action.payload;
         return {
           ...state,
           utenti: [
