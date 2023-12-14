@@ -49,6 +49,9 @@ export function InfoDiv({ isBottomDivOpen, selected }) {
 }
 
 function StationInfo({ selected }) {
+  const { prenotaBicicletta, isBikeAvailable, isBikeReserved } =
+    useBikeSharing();
+
   const batteryIcon = (battery) => {
     if (battery < 1) {
       battery = battery * 100;
@@ -133,7 +136,20 @@ function StationInfo({ selected }) {
                         <p className="mt-2">{batteryIcon(bike.battery)}</p>
                       </TableCell>
                       <TableCell className="!py-2 text-right">
-                        <button className="flex flex-row items-center justify-center rounded-xl border bg-green-500 p-2 ">
+                        <button
+                          className={
+                            "flex flex-row items-center justify-center rounded-xl border bg-green-500 p-2 " +
+                            (bike.isReserved || !bike.isAvailable
+                              ? "hover:bg-red-500"
+                              : "hover:bg-green-600")
+                          }
+                          disabled={
+                            bike.isReserved || !bike.isAvailable ? true : false
+                          }
+                          onClick={() => {
+                            prenotaBicicletta(bike.id, 1);
+                          }}
+                        >
                           <p className="text-md ">Prenota</p>
                         </button>
                       </TableCell>
@@ -180,8 +196,10 @@ import {
   Battery6BarSharp,
   ReportProblemSharp,
 } from "@mui/icons-material";
+import { useBikeSharing } from "../../hooks/ridesHook.jsx";
 
 function BikeInfo({ selected }) {
+  const { prenotaBicicletta, isBikeAvailable } = useBikeSharing();
   useEffect(() => {
     if (selected.battery < 1) {
       selected.battery = selected.battery * 100;
@@ -264,7 +282,13 @@ function BikeInfo({ selected }) {
       </div>
 
       <div className="mt-2 flex w-full flex-row items-center justify-between">
-        <button className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1">
+        <button
+          className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
+          disabled={!isBikeAvailable(selected.id)}
+          onClick={() => {
+            prenotaBicicletta(selected.id, 1);
+          }}
+        >
           <p className="text-lg font-semibold">Prenota</p>
           <p className="text-md font-normal">Gratis i primi 10 minuti</p>
         </button>

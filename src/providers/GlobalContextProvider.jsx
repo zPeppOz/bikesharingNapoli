@@ -29,9 +29,12 @@ export default function GlobalContextProvider({ children }) {
         state.stazioni[action.payload.id] = action.payload;
         return {
           ...state,
-          stazioni: {
+          stazioni: [
             ...state.stazioni,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "addBici":
         return {
@@ -52,20 +55,21 @@ export default function GlobalContextProvider({ children }) {
         };
 
       case "updateBici":
-        state.bici[action.payload.id] = action.payload;
+        state.bici[action.payload.id - 1] = action.payload;
+        console.log(state.bici[action.payload.id - 1]);
         return {
           ...state,
-          bici: {
-            ...state.bici,
-          },
+          bici: [...state.bici],
         };
       case "addPrenotazione":
         return {
           ...state,
-          prenotazioni: {
+          prenotazioni: [
             ...state.prenotazioni,
-            ...action.payload,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "removePrenotazione":
         state.prenotazioni.splice(action.payload, 1);
@@ -79,17 +83,22 @@ export default function GlobalContextProvider({ children }) {
         state.prenotazioni[action.payload.id] = action.payload;
         return {
           ...state,
-          prenotazioni: {
+          prenotazioni: [
             ...state.prenotazioni,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "addUtente":
         return {
           ...state,
-          utenti: {
+          utenti: [
             ...state.utenti,
-            ...action.payload,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "removeUtente":
         state.utenti.splice(action.payload, 1);
@@ -99,21 +108,31 @@ export default function GlobalContextProvider({ children }) {
             ...state.utenti,
           },
         };
+      case "loginUtente":
+        return {
+          ...state,
+          loggedUser: action.payload,
+        };
       case "updateUtente":
         state.utenti[action.payload.id] = action.payload;
         return {
           ...state,
-          utenti: {
+          utenti: [
             ...state.utenti,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "addTicket":
         return {
           ...state,
-          ticket: {
+          ticket: [
             ...state.ticket,
-            ...action.payload,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       case "removeTicket":
         state.ticket.splice(action.payload, 1);
@@ -127,9 +146,12 @@ export default function GlobalContextProvider({ children }) {
         state.ticket[action.payload.id] = action.payload;
         return {
           ...state,
-          ticket: {
+          ticket: [
             ...state.ticket,
-          },
+            {
+              ...action.payload,
+            },
+          ],
         };
       default:
         return state;
@@ -142,15 +164,17 @@ export default function GlobalContextProvider({ children }) {
     prenotazioni: prenotazioni,
     utenti: utenti,
     ticket: ticket,
+    loggedUser: null,
   });
 
   useEffect(() => {
     console.log(state);
-  }, [state]);
+  }, [state, biciclette, stazioni, prenotazioni, utenti, ticket]);
 
   return (
     <GlobalContext.Provider
       value={{
+        state,
         ...state,
         dispatch,
       }}

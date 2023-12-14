@@ -1,8 +1,16 @@
-import { useContext } from "react";
-import { GlobalContext } from "./GlobalContext";
+import { useContext, useState } from "react";
+import { GlobalContext } from "../providers/GlobalContext";
 
 export const useBikeSharing = () => {
   const { state, dispatch } = useContext(GlobalContext);
+
+  const isBikeAvailable = (idBici) => {
+    return state.bici[idBici].isAvailable;
+  };
+
+  const isBikeReserved = (idBici) => {
+    return state.bici[idBici].isReserved;
+  };
 
   const prenotaBicicletta = (idBici, idUtente) => {
     const nuovaPrenotazione = {
@@ -11,7 +19,12 @@ export const useBikeSharing = () => {
       utenteId: idUtente,
       inizio: new Date(),
     };
-
+    console.log(nuovaPrenotazione);
+    const bici = state.bici.find((bici) => bici.id === idBici);
+    dispatch({
+      type: "updateBici",
+      payload: { ...bici, isReserved: true },
+    });
     dispatch({ type: "addPrenotazione", payload: nuovaPrenotazione });
   };
 
@@ -24,7 +37,10 @@ export const useBikeSharing = () => {
     const biciInUso = state.bici.find(
       (bici) => bici.id === state.prenotazioni[idPrenotazione].biciId
     );
-    dispatch({ type: "updateBici", payload: { ...biciInUso, inUso: true } });
+    dispatch({
+      type: "updateBici",
+      payload: { ...biciInUso, isAvailable: false },
+    });
   };
 
   const terminaCorsa = (idPrenotazione) => {
@@ -39,7 +55,7 @@ export const useBikeSharing = () => {
     });
     dispatch({
       type: "updateBici",
-      payload: { ...state.bici[prenotazione.biciId], inUso: false },
+      payload: { ...state.bici[prenotazione.biciId], isAvailable: true },
     });
   };
 
@@ -56,5 +72,11 @@ export const useBikeSharing = () => {
     return id;
   };
 
-  return { prenotaBicicletta, iniziaCorsa, terminaCorsa };
+  return {
+    prenotaBicicletta,
+    iniziaCorsa,
+    terminaCorsa,
+    isBikeAvailable,
+    isBikeReserved,
+  };
 };

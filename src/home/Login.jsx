@@ -1,8 +1,59 @@
 import { LoginRounded } from "@mui/icons-material";
 import { FormGroup, TextField, Button } from "@mui/material";
 import { TopHeader } from "./components/TopHeader";
+import { useNavigate } from "react-router-dom";
+import { useUsers } from "../hooks/usersHook";
+import { useState } from "react";
 
 export default function LoginPage(props) {
+  const navigate = useNavigate();
+  const { loggedUser, loginUser } = useUsers();
+
+  const [form, setForm] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [error, setError] = useState({
+    username: "",
+    password: "",
+  });
+
+  function validate() {
+    let isValid = true;
+    let newErrors = {
+      username: "",
+      password: "",
+    };
+
+    Object.keys(form).forEach((key) => {
+      if (!form[key]) {
+        newErrors[key] = `Inserisci ${key}`;
+        isValid = false;
+      }
+    });
+
+    setError(newErrors);
+    return isValid;
+  }
+
+  const handleLogin = () => {
+    if (validate()) {
+      const isLogged = loginUser(form.username, form.password);
+      if (isLogged) {
+        alert("Login avvenuto con successo");
+        navigate("/app");
+      } else {
+        let newErrors = {
+          username: "",
+          password: "",
+        };
+        newErrors.password = "Username o password errati";
+        setError(newErrors);
+      }
+    }
+  };
+
   return (
     <div className=" h-screen w-full">
       <TopHeader />
@@ -18,7 +69,13 @@ export default function LoginPage(props) {
               style={{
                 width: "20rem",
               }}
+              onChange={(e) => {
+                setForm({ ...form, username: e.target.value });
+              }}
             />
+            {error.username && (
+              <p className="-mt-2 text-xs text-red-500">{error.username}</p>
+            )}
             <TextField
               id="outlined-password-input"
               label="Password"
@@ -28,9 +85,21 @@ export default function LoginPage(props) {
               style={{
                 width: "20rem",
               }}
+              onChange={(e) => {
+                setForm({ ...form, password: e.target.value });
+              }}
             />
+            {error.password && (
+              <p className="-mt-2 text-xs text-red-500">{error.password}</p>
+            )}
           </FormGroup>
-          <Button variant="contained" startIcon={<LoginRounded />}>
+          <Button
+            variant="contained"
+            startIcon={<LoginRounded />}
+            onClick={() => {
+              handleLogin();
+            }}
+          >
             Login
           </Button>
         </div>

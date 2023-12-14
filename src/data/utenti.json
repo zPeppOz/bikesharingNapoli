@@ -1,1 +1,79 @@
-[]
+[
+  {
+    "id": "1",
+    "nome": "Giuseppe",
+    "cognome": "Setaro",
+    "username": "giuseppe.setaro",
+    "password": "test1"
+  },
+  {
+    "id": "2",
+    "nome": "Prisco",
+    "cognome": "Sorgente",
+    "username": "prisco.sorgente",
+    "password": "test2"
+  },
+  {
+    "id": "3",
+    "nome": "Luigi",
+    "cognome": "Bianchi",
+    "username": "luigi.bianchi",
+    "password": "test3"
+  },
+  {
+    "id": "4",
+    "nome": "Giovanni",
+    "cognome": "Verdi",
+    "username": "giovanni.verdi",
+    "password": "test4"
+  },
+  {
+    "id": "5",
+    "nome": "Paolo",
+    "cognome": "Neri",
+    "username": "paolo.neri",
+    "password": "test5"
+  },
+  {
+    "id": "6",
+    "nome": "Marco",
+    "cognome": "Gialli",
+    "username": "marco.gialli",
+    "password": "test6"
+  },
+  {
+    "id": "7",
+    "nome": "Giacomo",
+    "cognome": "Rosa",
+    "username": "giacomo.rosa",
+    "password": "test7"
+  },
+  {
+    "id": "8",
+    "nome": "Giovanna",
+    "cognome": "Blu",
+    "username": "giovanna.blu",
+    "password": "test8"
+  },
+  {
+    "id": "9",
+    "nome": "Giulia",
+    "cognome": "Gialla",
+    "username": "giulia.gialla",
+    "password": "test9"
+  },
+  {
+    "id": "10",
+    "nome": "Giorgio",
+    "cognome": "Verde",
+    "username": "giorgio.verde",
+    "password": "test10"
+  },
+  {
+    "id": "11",
+    "nome": "Gianluca",
+    "cognome": "Rosa",
+    "username": "gianluca.rosa",
+    "password": "test11"
+  }
+]

@@ -18,9 +18,11 @@ import { Button, SvgIcon } from "@mui/material";
 import "./css/MainApp.css";
 import ShowMarkers from "./components/ShowMarkers.jsx";
 import { InfoDiv } from "./components/InfoDiv.jsx";
+import { useUsers } from "../hooks/usersHook.jsx";
 
 export default function MainApp(props) {
-  const { bici: biciclette, stazioni } = useContext(GlobalContext);
+  const { bici: biciclette, stazioni, loggedUser } = useContext(GlobalContext);
+
   const menuSections = [
     {
       id: 1,
@@ -64,8 +66,8 @@ export default function MainApp(props) {
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [center, setCenter] = useState([40.8517746, 14.2681244]);
   // Funzione per gestire il clic sul bottone e cambiare la visibilità del menu
-  const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
+  const toggleMenu = (flag) => {
+    flag === undefined ? setMenuOpen(!isMenuOpen) : setMenuOpen(flag);
   };
 
   //variaible di stato per la finestra home
@@ -113,6 +115,12 @@ export default function MainApp(props) {
     setSelected(null);
   };
 
+  useEffect(() => {
+    if (biciclette && stazioni) {
+      setIsLoading(false);
+    }
+  }, [biciclette, stazioni]);
+
   return (
     <div className="h-screen w-screen overflow-hidden">
       <MapContainer
@@ -133,6 +141,7 @@ export default function MainApp(props) {
             toggleBottomDiv,
             hideBottomDiv,
             setSelected,
+            toggleMenu,
           }}
         />
       </MapContainer>
@@ -148,7 +157,7 @@ export default function MainApp(props) {
         {isMenuOpen && (
           <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4">
             <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
-              <p className="mt-1">Ciao </p>
+              <p className="mt-1">Ciao, {loggedUser?.nome}</p>
               <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
                 <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
                   <p className="ap-px text-center text-xs font-extralight text-white">
@@ -163,12 +172,6 @@ export default function MainApp(props) {
               </div>
             </div>
             <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
-              {/* <p>Test</p>
-              <p>Test</p>
-              <p>Test</p>
-              <p>Test</p>
-              <p>Test</p>
-              <p>Test</p> */}
               {menuSections.map((section, index) => (
                 <div
                   key={section.id}

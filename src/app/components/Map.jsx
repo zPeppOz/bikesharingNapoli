@@ -23,11 +23,13 @@ export default function Map({ biciclette, stazioni, handlers }) {
     click: (e) => {
       handlers.setSelected(null);
       handlers.hideBottomDiv();
+      handlers.toggleMenu(false);
     },
   });
 
   useEffect(() => {
     if (biciclette && stazioni) {
+      console.log("biciclette", biciclette);
       setIsLoading(false);
     }
   }, [biciclette, stazioni]);
@@ -58,7 +60,7 @@ export default function Map({ biciclette, stazioni, handlers }) {
       })}
       {biciclette
         // .filter((el) => el.isVisible === true)
-        .map((bicicletta) => {
+        ?.map((bicicletta) => {
           return (
             <MapMarker
               obj={{
