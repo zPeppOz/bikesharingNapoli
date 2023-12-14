@@ -172,7 +172,15 @@ export default function MainApp(props) {
         />
       </MapContainer>
 
-      <InfoDiv isBottomDivOpen={isBottomDivOpen} selected={selected} />
+      <InfoDiv
+        isBottomDivOpen={isBottomDivOpen}
+        selected={selected}
+        handlers={{
+          toggleBottomDiv,
+          hideBottomDiv,
+          showBottomDiv,
+        }}
+      />
       <div className="h-full w-fit ">
         <button
           className="absolute left-5 top-5 z-50 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"

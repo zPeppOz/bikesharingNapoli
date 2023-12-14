@@ -16,7 +16,7 @@ import {
   TableContainer,
 } from "@mui/material";
 
-export function InfoDiv({ isBottomDivOpen, selected }) {
+export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
   const divRef = useRef();
   const isPhone = window.innerWidth < 768;
   useEffect(() => {
@@ -44,7 +44,9 @@ export function InfoDiv({ isBottomDivOpen, selected }) {
       </div>
       <BottomDiv isOpen={isBottomDivOpen}>
         {selected?.bikes && <StationInfo selected={selected} />}
-        {selected?.battery && <BikeInfo selected={selected} />}
+        {selected?.battery && (
+          <BikeInfo selected={selected} handlers={handlers} />
+        )}
       </BottomDiv>
     </>
   );
@@ -201,7 +203,7 @@ import {
 } from "@mui/icons-material";
 import { useBikeSharing } from "../../hooks/ridesHook.jsx";
 
-function BikeInfo({ selected }) {
+function BikeInfo({ selected, handlers }) {
   const { iniziaCorsa, isBikeAvailable } = useBikeSharing();
 
   useEffect(() => {
@@ -252,6 +254,7 @@ function BikeInfo({ selected }) {
 
   const [isReserved, setIsReserved] = useState(false);
   const [removePrenota, setRemovePrenota] = useState(true);
+  const [removeContainer, setRemoveContainer] = useState(true);
 
   const handleIsReserved = () => {
     setIsReserved(!isReserved);
@@ -261,66 +264,83 @@ function BikeInfo({ selected }) {
     setRemovePrenota(!removePrenota);
   };
 
-  return (
-    <div className="flex flex-col items-stretch justify-between ">
-      <div className="flex w-full flex-row items-stretch justify-between">
-        <div className="flex flex-col items-start justify-start">
-          <p className=" text-2xl font-semibold">NAPOLI-{selected.id}</p>
-          <div className="flex flex-row items-center justify-start">
-            {batteryIcon(selected.battery)}
-            <p className="ml-2 text-sm font-light text-gray-400">
-              ({selected.autonomia} km di autonomia)
-            </p>
-          </div>
-          <p className="ml-0 inline-flex flex-row items-center">
-            <img
-              src="https://www.mastercard.it/content/dam/public/mastercardcom/it/it/icons/mc-logo-52.svg"
-              className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
-            />
-            <span className="ml-2 text-sm text-gray-400">
-              €0.80 per iniziare, poi €0.30/minuto{" "}
-            </span>
-          </p>
-        </div>
-        <div className="flex flex-col items-center justify-center">
-          {/* icona bici */}
-          <img
-            src={BikeIMG}
-            className="-mt-2 h-auto w-24 object-contain object-center md:w-28"
-            alt="bike"
-          />
-          <ReportButton />
-        </div>
-      </div>
+  const handleRemoveContainer = () => {
+    setRemoveContainer(!removeContainer);
+  };
 
-      <div className="mt-2 flex w-full flex-row items-center justify-between">
-        {removePrenota && (
-          <>
-            <button
-              className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
-              disabled={!isBikeAvailable(selected.id)}
-              onClick={() => {
-                handleIsReserved();
-                handleRemovePrenota();
-              }}
-            >
-              <p className="text-lg font-semibold">Prenota</p>
-              <p className="text-md font-normal">Gratis i primi 10 minuti</p>
-            </button>
-          </>
-        )}
-        {isReserved && (
-          <button
-            className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1"
-            onClick={() => {
-              iniziaCorsa(selected.id, 1);
-            }}
-          >
-            <p className="font-semibold- text-lg">INIZIA CORSA</p>
-            <p className="text-md font-normal">muoviti dio</p>
-          </button>
-        )}
-      </div>
+  return (
+    <div>
+      {removeContainer && (
+        <>
+          <div className="flex flex-col items-stretch justify-between ">
+            <div className="flex w-full flex-row items-stretch justify-between">
+              <div className="flex flex-col items-start justify-start">
+                <p className=" text-2xl font-semibold">NAPOLI-{selected.id}</p>
+                <div className="flex flex-row items-center justify-start">
+                  {batteryIcon(selected.battery)}
+                  <p className="ml-2 text-sm font-light text-gray-400">
+                    ({selected.autonomia} km di autonomia)
+                  </p>
+                </div>
+                <p className="ml-0 inline-flex flex-row items-center">
+                  <img
+                    src="https://www.mastercard.it/content/dam/public/mastercardcom/it/it/icons/mc-logo-52.svg"
+                    className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
+                  />
+                  <span className="ml-2 text-sm text-gray-400">
+                    €0.80 per iniziare, poi €0.30/minuto{" "}
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                {/* icona bici */}
+                <img
+                  src={BikeIMG}
+                  className="-mt-2 h-auto w-24 object-contain object-center md:w-28"
+                  alt="bike"
+                />
+                <button className="flex flex-row items-center rounded-xl border bg-gray-300 p-2 ">
+                  <ReportProblemSharp className="text-gray-600 " />
+                  <p className="ml-1 text-xs text-gray-600">
+                    Segnala un problema
+                  </p>
+                </button>
+              </div>
+            </div>
+
+            <div className="mt-2 flex w-full flex-row items-center justify-between">
+              {removePrenota && (
+                <>
+                  <button
+                    className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
+                    disabled={!isBikeAvailable(selected.id)}
+                    onClick={() => {
+                      handleIsReserved();
+                      handleRemovePrenota();
+                    }}
+                  >
+                    <p className="text-lg font-semibold">Prenota</p>
+                    <p className="text-md font-normal">
+                      Gratis i primi 10 minuti
+                    </p>
+                  </button>
+                </>
+              )}
+              {isReserved && (
+                <button
+                  className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1"
+                  onClick={() => {
+                    iniziaCorsa(selected.id, 1);
+                  }}
+                >
+                  <p className="font-semibold- text-lg">INIZIA CORSA</p>
+                  <p className="text-md font-normal">muoviti dio</p>
+                </button>
+              )}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }
