@@ -4,76 +4,99 @@
     "nome": "Giuseppe",
     "cognome": "Setaro",
     "username": "giuseppe.setaro",
-    "password": "test1"
+    "password": "test1",
+    "prenotazioni": [],
+    "corse": [],
+    "ruolo": "admin"
   },
   {
     "id": "2",
     "nome": "Prisco",
     "cognome": "Sorgente",
     "username": "prisco.sorgente",
-    "password": "test2"
+    "password": "test2",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "3",
     "nome": "Luigi",
     "cognome": "Bianchi",
     "username": "luigi.bianchi",
-    "password": "test3"
+    "password": "test3",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "4",
     "nome": "Giovanni",
     "cognome": "Verdi",
     "username": "giovanni.verdi",
-    "password": "test4"
+    "password": "test4",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "5",
     "nome": "Paolo",
     "cognome": "Neri",
     "username": "paolo.neri",
-    "password": "test5"
+    "password": "test5",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "6",
     "nome": "Marco",
     "cognome": "Gialli",
     "username": "marco.gialli",
-    "password": "test6"
+    "password": "test6",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "7",
     "nome": "Giacomo",
     "cognome": "Rosa",
     "username": "giacomo.rosa",
-    "password": "test7"
+    "password": "test7",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "8",
     "nome": "Giovanna",
     "cognome": "Blu",
     "username": "giovanna.blu",
-    "password": "test8"
+    "password": "test8",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "9",
     "nome": "Giulia",
     "cognome": "Gialla",
     "username": "giulia.gialla",
-    "password": "test9"
+    "password": "test9",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "10",
     "nome": "Giorgio",
     "cognome": "Verde",
     "username": "giorgio.verde",
-    "password": "test10"
+    "password": "test10",
+    "prenotazioni": [],
+    "corse": []
   },
   {
     "id": "11",
     "nome": "Gianluca",
     "cognome": "Rosa",
     "username": "gianluca.rosa",
-    "password": "test11"
+    "password": "test11",
+    "prenotazioni": [],
+    "corse": []
   }
 ]

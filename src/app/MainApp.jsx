@@ -181,7 +181,7 @@ export default function MainApp(props) {
           <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
         </button>
         {isMenuOpen && (
-          <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4">
+          <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4 shadow-xl">
             <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
               <p className="mt-1">Ciao, {loggedUser?.nome}</p>
               <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
@@ -200,16 +200,23 @@ export default function MainApp(props) {
                 />
                 <div>
                   {isNotificationsOpen && (
-                    <div className=" notifiche ">
+                    <div className=" notifiche shadow-lg  ">
                       {notificationPhrases.map((phrase, index) => (
-                        <p key={index}>
-                          {phrase}
+                        <div
+                          key={index}
+                          className="flex flex-row items-center justify-between border-b p-2"
+                        >
+                          <p>
+                            <p className="text-md">{phrase}</p>
+                            <p className="text-xs">Testo2</p>
+                          </p>
                           <button
                             onClick={() => handleRemoveNotification(index)}
+                            className="text-md mb-5"
                           >
                             X
                           </button>
-                        </p>
+                        </div>
                       ))}
                     </div>
                   )}
