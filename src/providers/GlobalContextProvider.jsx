@@ -26,7 +26,10 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "updateStazione":
-        state.stazioni[action.payload.id] = action.payload;
+        const indexStazione = state.stazioni.findIndex(
+          (stazione) => stazione.id === action.payload.id
+        );
+        state.stazioni[indexStazione] = action.payload;
         return {
           ...state,
           stazioni: [
@@ -55,8 +58,10 @@ export default function GlobalContextProvider({ children }) {
         };
 
       case "updateBici":
-        state.bici[action.payload.id - 1] = action.payload;
-        console.log(state.bici[action.payload.id - 1]);
+        const indexBici = state.bici.findIndex(
+          (bici) => bici.id === action.payload.id
+        );
+        state.bici[indexBici] = action.payload;
         return {
           ...state,
           bici: [...state.bici],
@@ -80,7 +85,10 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "updatePrenotazione":
-        state.prenotazioni[action.payload.id] = action.payload;
+        const indexPrenotazione = state.prenotazioni.findIndex(
+          (prenotazione) => prenotazione.id === action.payload.id
+        );
+        state.prenotazioni[indexPrenotazione] = action.payload;
         return {
           ...state,
           prenotazioni: [
@@ -114,7 +122,10 @@ export default function GlobalContextProvider({ children }) {
           loggedUser: action.payload,
         };
       case "updateUtente":
-        state.utenti[action.payload.id] = action.payload;
+        const indexUtente = state.utenti.findIndex(
+          (utente) => utente.id === action.payload.id
+        );
+        state.utenti[indexUtente] = action.payload;
         return {
           ...state,
           utenti: [
@@ -143,7 +154,10 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "updateTicket":
-        state.ticket[action.payload.id] = action.payload;
+        const indexTicket = state.ticket.findIndex(
+          (ticket) => ticket.id === action.payload.id
+        );
+        state.ticket[indexTicket] = action.payload;
         return {
           ...state,
           ticket: [
@@ -153,6 +167,52 @@ export default function GlobalContextProvider({ children }) {
             },
           ],
         };
+      case "addCorsa":
+        return {
+          ...state,
+          corse: [
+            ...state.corse,
+            {
+              ...action.payload,
+            },
+          ],
+        };
+      case "removeCorsa":
+        state.corse.splice(action.payload, 1);
+        return {
+          ...state,
+          corse: {
+            ...state.corse,
+          },
+        };
+      case "updateCorsa":
+        // find index of object
+        const corsa = state.corse.find(
+          (corsa) => corsa.id === action.payload.id
+        );
+        return {
+          ...state,
+          corse: [...state.corse, { ...corsa, ...action.payload }],
+        };
+      case "addNotifica":
+        return {
+          ...state,
+          notifiche: [
+            ...state.notifiche,
+            {
+              ...action.payload,
+            },
+          ],
+        };
+      case "removeNotifica":
+        state.notifiche.splice(action.payload, 1);
+        return {
+          ...state,
+          notifiche: {
+            ...state.notifiche,
+          },
+        };
+
       default:
         return state;
     }
@@ -165,6 +225,8 @@ export default function GlobalContextProvider({ children }) {
     utenti: utenti,
     ticket: ticket,
     loggedUser: null,
+    corse: [],
+    notifiche: [],
   });
 
   useEffect(() => {

@@ -1,6 +1,18 @@
 import { useContext, useState } from "react";
 import { GlobalContext } from "../providers/GlobalContext";
 
+const corsa = {
+  id: 1,
+  biciId: 1,
+  utenteId: 1,
+  prenotazioneId: 1,
+  inizio: null,
+  inizioCorsa: null,
+  durata: null,
+  fineCorsa: null,
+  costo: 0,
+};
+
 export const useBikeSharing = () => {
   const { state, dispatch } = useContext(GlobalContext);
 
@@ -17,57 +29,67 @@ export const useBikeSharing = () => {
       id: generateUniqueID(),
       biciId: idBici,
       utenteId: idUtente,
-      inizio: new Date(),
+      oraPrenotazione: new Date(),
     };
     console.log(nuovaPrenotazione);
     const bici = state.bici.find((bici) => bici.id === idBici);
+    const utente = state.utenti.find((utente) => utente.id === idUtente);
     dispatch({
       type: "updateBici",
       payload: { ...bici, isReserved: true },
+    });
+    dispatch({
+      type: "updateUtente",
+      payload: {
+        ...utente,
+        prenotazioni: [...utente.prenotazioni, nuovaPrenotazione.id],
+      },
     });
     dispatch({ type: "addPrenotazione", payload: nuovaPrenotazione });
   };
 
   const iniziaCorsa = (idPrenotazione) => {
-    dispatch({
-      type: "updatePrenotazione",
-      payload: { id: idPrenotazione, inizioCorsa: new Date() },
+    // dispatch({
+    //   type: "updatePrenotazione",
+    //   payload: { id: idPrenotazione, inizioCorsa: new Date() },
+    // });
+    const prenotazione = state.prenotazioni.find((prenotazione) => {
+      return prenotazione.id === idPrenotazione;
     });
-
+    const newCorsa = {
+      ...corsa,
+      id: generateUniqueID(),
+      biciId: prenotazione.biciId,
+      utenteId: prenotazione.utenteId,
+      prenotazioneId: prenotazione.id,
+      inizio: new Date(),
+      inizioCorsa: new Date(),
+    };
     const biciInUso = state.bici.find(
       (bici) => bici.id === state.prenotazioni[idPrenotazione].biciId
     );
+    dispatch({ type: "addCorsa", payload: newCorsa });
     dispatch({
       type: "updateBici",
       payload: { ...biciInUso, isAvailable: false },
     });
   };
 
-  const terminaCorsa = (idPrenotazione) => {
+  const terminaCorsa = (idCorsa, costo) => {
     const fineCorsa = new Date();
-    const prenotazione = state.prenotazioni[idPrenotazione];
     const durata = (fineCorsa - new Date(prenotazione.inizioCorsa)) / 1000;
-    const costo = calcolaCosto(durata);
-
     dispatch({
-      type: "updatePrenotazione",
-      payload: { ...prenotazione, fineCorsa, costo },
+      type: "updateCorsa",
+      payload: { id: idCorsa, fineCorsa, costo, durata },
     });
     dispatch({
       type: "updateBici",
-      payload: { ...state.bici[prenotazione.biciId], isAvailable: true },
+      payload: { id: prenotazione.biciId, isAvailable: true },
     });
-  };
-
-  const calcolaCosto = (durata) => {
-    // Logica di calcolo basata sulla durata
-    // Esempio: 0.10€ al minuto
-    return (durata / 60) * 0.1;
   };
 
   const generateUniqueID = () => {
     // Implementa una logica per generare un ID unico
-
     const id = Math.floor(Math.random() * 1000000);
     return id;
   };

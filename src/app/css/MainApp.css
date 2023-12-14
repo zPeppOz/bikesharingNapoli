@@ -166,12 +166,11 @@ ul#menu li:hover {
   border-radius: 10px;
   overflow: auto; /* Abilita lo scrolling quando il contenuto supera la dimensione fissa */
 }
-
+/* 
 .notifiche p {
   display: flex;
   justify-content: space-between;
-  padding-left: 0.5rem;
-  padding-right: 1.5rem;
+
   margin-left: 5px;
   align-items: center;
   top: 5px;
@@ -181,7 +180,7 @@ ul#menu li:hover {
   border-bottom: 1.4px solid rgb(85, 85, 85);
   border-bottom-right-radius: 5px;
   border-bottom-left-radius: 5px;
-}
+} */
 
 .notifiche button {
   color: red;
