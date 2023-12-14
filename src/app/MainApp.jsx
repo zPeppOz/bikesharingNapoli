@@ -133,7 +133,7 @@ export default function MainApp(props) {
 
       // Aggiungi la nuova frase all'array delle notifiche
       setNotificationPhrases((prevPhrases) => [...prevPhrases, newPhrase]);
-    }, 5000);
+    }, 50000);
 
     // Pulisce l'intervallo quando il componente si smonta
     return () => clearInterval(intervalId);
@@ -237,7 +237,9 @@ export default function MainApp(props) {
                 </div>
               ))}
 
-              {isSectionMenuOpen && <SectionMenu data={menuSections[i].data} />}
+              {isSectionMenuOpen && (
+                <SectionMenu data={menuSections[index].data} />
+              )}
             </div>
           </div>
         )}

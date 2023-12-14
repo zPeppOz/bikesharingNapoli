@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from "react";
+import { useState } from "react";
+
 import { BottomDiv } from "./BottomDiv.jsx";
 import BikeIMG from "../../assets/bike_real.png";
 import mastercard from "../../assets/mastercard-logo.svg";
@@ -151,6 +153,7 @@ function StationInfo({ selected }) {
                           }}
                         >
                           <p className="text-md ">Prenota</p>
+                          <p className="text-sm "> Inizia corsa</p>
                         </button>
                       </TableCell>
                     </TableRow>
@@ -246,6 +249,17 @@ function BikeInfo({ selected }) {
   };
   console.log(mastercard);
 
+  const [isReserved, setIsReserved] = useState(false);
+  const [removePrenota, setRemovePrenota] = useState(true);
+
+  const handleIsReserved = () => {
+    setIsReserved(!isReserved);
+  };
+
+  const handleRemovePrenota = () => {
+    setRemovePrenota(!removePrenota);
+  };
+
   return (
     <div className="flex flex-col items-stretch justify-between ">
       <div className="flex w-full flex-row items-stretch justify-between">
@@ -282,16 +296,30 @@ function BikeInfo({ selected }) {
       </div>
 
       <div className="mt-2 flex w-full flex-row items-center justify-between">
-        <button
-          className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
-          disabled={!isBikeAvailable(selected.id)}
-          onClick={() => {
-            prenotaBicicletta(selected.id, 1);
-          }}
-        >
-          <p className="text-lg font-semibold">Prenota</p>
-          <p className="text-md font-normal">Gratis i primi 10 minuti</p>
-        </button>
+        {removePrenota && (
+          <>
+            <button
+              className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
+              disabled={!isBikeAvailable(selected.id)}
+              onClick={() => {
+                prenotaBicicletta(selected.id, 1);
+                handleIsReserved();
+                handleRemovePrenota();
+              }}
+            >
+              <p className="text-lg font-semibold">Prenota</p>
+              <p className="text-md font-normal">Gratis i primi 10 minuti</p>
+            </button>
+          </>
+        )}
+        {isReserved && (
+          <>
+            <button className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1">
+              <p className="font-semibold- text-lg">INIZIA CORSA</p>
+              <p className="text-md font-normal">muoviti dio</p>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );
