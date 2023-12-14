@@ -20,7 +20,7 @@ import ShowMarkers from "./components/ShowMarkers.jsx";
 import { InfoDiv } from "./components/InfoDiv.jsx";
 
 export default function MainApp(props) {
-  const { biciclette, stazioni } = useContext(GlobalContext);
+  const { bici: biciclette, stazioni } = useContext(GlobalContext);
   const menuSections = [
     {
       id: 1,
