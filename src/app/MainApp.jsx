@@ -62,7 +62,6 @@ export default function MainApp(props) {
   };
 
   // Stato per gestire la visibilità del menu
-  const [isLoading, setIsLoading] = useState(true);
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [center, setCenter] = useState([40.8517746, 14.2681244]);
   // Funzione per gestire il clic sul bottone e cambiare la visibilità del menu
@@ -115,11 +114,40 @@ export default function MainApp(props) {
     setSelected(null);
   };
 
+  //stato per la visualizzazione delle notifiche
+  const [isNotificationsOpen, setNotificationsOpen] = useState(false);
+
+  const toggleNotifications = () => {
+    setNotificationsOpen(!isNotificationsOpen);
+  };
+
+  //funzione per gestire la visibilità delle notifiche
+
+  //stato per il numero casuale
+
+  //stato per la frase casuale
+
+  // Funzione per gestire la visibilità delle notifiche
+  const [notificationPhrases, setNotificationPhrases] = useState([]);
+
   useEffect(() => {
-    if (biciclette && stazioni) {
-      setIsLoading(false);
-    }
-  }, [biciclette, stazioni]);
+    const phrases = ["Hai una promozione!!", "Frase 2", "Frase 3"];
+
+    const intervalId = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * phrases.length);
+      const newPhrase = phrases[randomIndex];
+
+      // Aggiungi la nuova frase all'array delle notifiche
+      setNotificationPhrases((prevPhrases) => [...prevPhrases, newPhrase]);
+    }, 5000);
+
+    // Pulisce l'intervallo quando il componente si smonta
+    return () => clearInterval(intervalId);
+  }, []); // Assicura che l'effetto venga eseguito solo una volta durante il montaggio del componente
+
+  // Funzione che genera una frase casuale ogni 5 secondi
+
+  //funzione che genera un numero random da 0 a 10 ogni 5 secondi
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -168,9 +196,22 @@ export default function MainApp(props) {
                   style={{
                     fontSize: "24px",
                   }}
+                  onClick={toggleNotifications}
                 />
+                <div>
+                  {isNotificationsOpen && (
+                    <div className=" notifiche">
+                      {notificationPhrases.map((phrase, index) => (
+                        <p key={index}>
+                          {phrase} <button> X </button>
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
+
             <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
               {menuSections.map((section, index) => (
                 <div
