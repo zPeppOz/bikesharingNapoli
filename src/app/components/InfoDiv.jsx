@@ -331,6 +331,7 @@ function BikeInfo({ selected, handlers }) {
                   className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1"
                   onClick={() => {
                     iniziaCorsa(selected.id, 1);
+                    handleRemoveContainer;
                   }}
                 >
                   <p className="font-semibold- text-lg">INIZIA CORSA</p>
