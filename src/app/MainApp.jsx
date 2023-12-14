@@ -19,37 +19,29 @@ import "./css/MainApp.css";
 import ShowMarkers from "./components/ShowMarkers.jsx";
 import { InfoDiv } from "./components/InfoDiv.jsx";
 import { useUsers } from "../hooks/usersHook.jsx";
+import { useNavigate } from "react-router-dom";
 
 export default function MainApp(props) {
   const { bici: biciclette, stazioni, loggedUser } = useContext(GlobalContext);
-
+  const navigate = useNavigate();
   const menuSections = [
     {
       id: 1,
       label: "Home",
-      data: ["Dati 1", "Dati 2", "Dati 3", "Dati 4", "Dati 5"],
+      path: "/",
     },
 
     {
       id: 2,
-      label: "About Us",
-      data: ["Dati A", "Dati B", "Dati C"],
+      label: "Fatturazione",
+      path: "/fatturazione",
     },
     {
       id: 3,
-      label: "Services",
-      data: ["Servizio 1", "Servizio 2", "Servizio 3"],
+      label: "Corse",
+      path: "/corse",
     },
-    {
-      id: 4,
-      label: "Portfolio",
-      data: ["Progetto A", "Progetto B", "Progetto C"],
-    },
-    {
-      id: 5,
-      label: "Contact",
-      data: ["Contatto 1", "Contatto 2", "Contatto 3"],
-    },
+
     // Aggiungi altre sezioni del menu come necessario
   ];
 
@@ -238,17 +230,16 @@ export default function MainApp(props) {
                   key={section.id}
                   className=" flex flex-row items-center justify-start"
                 >
-                  <button
-                    onClick={() => {
-                      //chiude il menu
-                      toggleMenu();
-                      toggleSectionMenu();
-                      setSectionIndex(index);
+                  <a
+                    href=""
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(section.path);
                     }}
                     className="flex flex-row items-center justify-start"
                   >
                     <p className="text-lg font-semibold ">{section.label}</p>
-                  </button>
+                  </a>
                 </div>
               ))}
 
