@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
-
+//importa css
 import { BottomDiv } from "./BottomDiv.jsx";
 import BikeIMG from "../../assets/bike_real.png";
 import mastercard from "../../assets/mastercard-logo.svg";
