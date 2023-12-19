@@ -208,7 +208,7 @@ import { GlobalContext } from "../../providers/GlobalContext.jsx";
 
 function BikeInfo({ selected, handlers }) {
   const { iniziaCorsa, isBikeAvailable, terminaCorsa } = useBikeSharing();
-  const { state } = useContext(GlobalContext);
+  const { state, loggedUser } = useContext(GlobalContext);
   useEffect(() => {
     if (selected.battery < 1) {
       selected.battery = selected.battery * 100;
@@ -389,8 +389,17 @@ function BikeInfo({ selected, handlers }) {
                     className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
                     disabled={!isBikeAvailable(selected.id)}
                     onClick={() => {
-                      handleIsReserved();
-                      handleRemovePrenota();
+                      if (
+                        state.utenti.find(
+                          (utente) => utente.id === loggedUser.id
+                        ).pagamento
+                      ) {
+                        handleIsReserved();
+                        handleRemovePrenota();
+                      } else {
+                        alert("Aggiungi un metodo di pagamento");
+                        handlers.setDialogOpen(true);
+                      }
                     }}
                   >
                     <p className="text-lg font-semibold">Prenota</p>

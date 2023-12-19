@@ -12,7 +12,20 @@ import { FaUser } from "react-icons/fa";
 import SectionMenu from "./components/SectionMenu.jsx";
 
 import "./css/MainApp.css";
-import { Button, SvgIcon } from "@mui/material";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  TextField,
+  DialogActions,
+  Radio,
+  RadioGroup,
+  FormControlLabel,
+  FormControl,
+  FormLabel,
+} from "@mui/material";
+import DatePicker from "react-date-picker";
+
 // import Marker from "./components/Marker.jsx";
 
 import "./css/MainApp.css";
@@ -22,7 +35,13 @@ import { useUsers } from "../hooks/usersHook.jsx";
 import { useNavigate } from "react-router-dom";
 
 export default function MainApp(props) {
-  const { bici: biciclette, stazioni, loggedUser } = useContext(GlobalContext);
+  const {
+    bici: biciclette,
+    stazioni,
+    loggedUser,
+    utenti,
+    dispatch,
+  } = useContext(GlobalContext);
   const navigate = useNavigate();
   const menuSections = [
     {
@@ -34,12 +53,16 @@ export default function MainApp(props) {
     {
       id: 2,
       label: "Fatturazione",
-      path: "/fatturazione",
+      onClick: () => {
+        setDialogOpen(true);
+      },
     },
     {
       id: 3,
       label: "Corse",
-      path: "/corse",
+      onClick: () => {
+        setDialogOpen(true);
+      },
     },
 
     // Aggiungi altre sezioni del menu come necessario
@@ -139,6 +162,20 @@ export default function MainApp(props) {
     );
   };
 
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [paymentDone, setPaymentDone] = useState(false);
+
+  useEffect(() => {
+    if (paymentDone) {
+      console.log("Pagamento effettuato");
+      utenti.find((utente) => utente.id === loggedUser.id).pagamento = true;
+      dispatch({
+        type: "updateUtente",
+        payload: utenti.find((utente) => utente.id === loggedUser.id),
+      });
+    }
+  }, [paymentDone]);
+
   return (
     <div className="h-screen w-screen overflow-hidden">
       <MapContainer
@@ -171,6 +208,7 @@ export default function MainApp(props) {
           toggleBottomDiv,
           hideBottomDiv,
           showBottomDiv,
+          setDialogOpen,
         }}
       />
       <div className="h-full w-fit ">
@@ -234,7 +272,9 @@ export default function MainApp(props) {
                     href=""
                     onClick={(e) => {
                       e.preventDefault();
-                      navigate(section.path);
+                      section.onClick
+                        ? section.onClick()
+                        : navigate(section.path);
                     }}
                     className="flex flex-row items-center justify-start"
                   >
@@ -250,6 +290,88 @@ export default function MainApp(props) {
           </div>
         )}
       </div>
+      <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)}>
+        <DialogContent>
+          <div
+            className="flex flex-col items-center justify-center"
+            style={{
+              gap: "0.75rem",
+            }}
+          >
+            <p className="text-lg font-semibold">
+              Inserisci un metodo di pagamento
+            </p>
+            <TextField
+              label="Numero carta"
+              name="numeroCarta"
+              fullWidth
+              variant="outlined"
+            />
+            <div className="flex flex-row items-center justify-center gap-4">
+              <TextField label="MM/YY" name="mese" variant="outlined" />
+              <TextField label="CVV" name="cvv" fullWidth variant="outlined" />
+            </div>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <TextField label="Nome" name="nome" variant="outlined" />
+              <TextField label="Cognome" name="cognome" variant="outlined" />
+            </div>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <TextField
+                label="Indirizzo"
+                name="indirizzo"
+                variant="outlined"
+              />
+              <TextField label="Città" name="citta" variant="outlined" />
+            </div>
+            <div className="flex flex-row items-center justify-center gap-4">
+              <RadioGroup row name="tipoCarta">
+                <FormControlLabel
+                  value="mastercard"
+                  control={<Radio />}
+                  label={
+                    <img
+                      src="https://www.mastercard.it/content/dam/public/mastercardcom/it/it/icons/mc-logo-52.svg"
+                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
+                    />
+                  }
+                />
+                <FormControlLabel
+                  value="visa"
+                  control={<Radio />}
+                  label={
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png"
+                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
+                    />
+                  }
+                />
+                <FormControlLabel
+                  value="paypal"
+                  control={<Radio />}
+                  label={
+                    <img
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png"
+                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
+                    />
+                  }
+                />
+              </RadioGroup>
+            </div>
+          </div>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDialogOpen(false)}>Annulla</Button>
+          <Button
+            variant="contained"
+            onClick={() => {
+              setPaymentDone(true);
+              setDialogOpen(false);
+            }}
+          >
+            Salva
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
