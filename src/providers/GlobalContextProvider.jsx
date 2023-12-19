@@ -118,6 +118,7 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "loginUtente":
+        localStorage.setItem("loggedUser", JSON.stringify(action.payload));
         return {
           ...state,
           loggedUser: action.payload,
@@ -221,7 +222,7 @@ export default function GlobalContextProvider({ children }) {
     prenotazioni: prenotazioni,
     utenti: utenti,
     ticket: ticket,
-    loggedUser: null,
+    loggedUser: JSON.parse(localStorage.getItem("loggedUser")) || null,
     corse: [],
     notifiche: [],
   });
