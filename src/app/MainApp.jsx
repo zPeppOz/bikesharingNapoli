@@ -10,20 +10,10 @@ import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import { FaUser } from "react-icons/fa";
 import SectionMenu from "./components/SectionMenu.jsx";
+import moment from "moment";
 
 import "./css/MainApp.css";
-import {
-  Button,
-  Dialog,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-} from "@mui/material";
+import { FormControl, FormLabel, Table } from "@mui/material";
 import DatePicker from "react-date-picker";
 
 // import Marker from "./components/Marker.jsx";
@@ -33,6 +23,8 @@ import ShowMarkers from "./components/ShowMarkers.jsx";
 import { InfoDiv } from "./components/InfoDiv.jsx";
 import { useUsers } from "../hooks/usersHook.jsx";
 import { useNavigate } from "react-router-dom";
+import { DialogCorse } from "./components/DialogCorse.jsx";
+import { DialogPagamento } from "./components/DialogPagamento.jsx";
 
 export default function MainApp(props) {
   const {
@@ -41,6 +33,7 @@ export default function MainApp(props) {
     loggedUser,
     utenti,
     dispatch,
+    corse,
   } = useContext(GlobalContext);
   const navigate = useNavigate();
   const menuSections = [
@@ -61,7 +54,7 @@ export default function MainApp(props) {
       id: 3,
       label: "Corse",
       onClick: () => {
-        setDialogOpen(true);
+        setCorseOpen(true);
       },
     },
 
@@ -163,6 +156,7 @@ export default function MainApp(props) {
   };
 
   const [isDialogOpen, setDialogOpen] = useState(false);
+  const [isCorseOpen, setCorseOpen] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
 
   useEffect(() => {
@@ -209,169 +203,143 @@ export default function MainApp(props) {
           hideBottomDiv,
           showBottomDiv,
           setDialogOpen,
+          setSelected,
         }}
       />
-      <div className="h-full w-fit ">
-        <button
-          className="absolute left-5 top-5 z-50 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
-          onClick={toggleMenu}
-        >
-          <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
-        </button>
-        {isMenuOpen && (
-          <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4 shadow-xl">
-            <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
-              <p className="mt-1">Ciao, {loggedUser?.nome}</p>
-              <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
-                {notificationPhrases.length > 0 && (
-                  <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
-                    <p className="ap-px text-center text-xs font-extralight text-white">
-                      {notificationPhrases.length}
-                    </p>
-                  </div>
-                )}
-                <NotificationsNoneIcon
-                  style={{
-                    fontSize: "24px",
-                  }}
-                  onClick={toggleNotifications}
-                />
-                <div>
-                  {isNotificationsOpen && (
-                    <div className=" notifiche shadow-lg  ">
-                      {notificationPhrases.map((phrase, index) => (
-                        <div
-                          key={index}
-                          className="flex flex-row items-center justify-between border-b p-2"
-                        >
-                          <p>
-                            <p className="text-md">{phrase}</p>
-                            <p className="text-xs">Testo2</p>
-                          </p>
-                          <button
-                            onClick={() => handleRemoveNotification(index)}
-                            className="text-md mb-5"
-                          >
-                            X
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+      {/* {MenuDiv(
+        toggleMenu,
+        isMenuOpen,
+        loggedUser,
+        notificationPhrases,
+        toggleNotifications,
+        isNotificationsOpen,
+        handleRemoveNotification,
+        menuSections,
+        navigate,
+        isSectionMenuOpen
+      )} */}
 
-            <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
-              {menuSections.map((section, index) => (
-                <div
-                  key={section.id}
-                  className=" flex flex-row items-center justify-start"
-                >
-                  <a
-                    href=""
-                    onClick={(e) => {
-                      e.preventDefault();
-                      section.onClick
-                        ? section.onClick()
-                        : navigate(section.path);
-                    }}
-                    className="flex flex-row items-center justify-start"
-                  >
-                    <p className="text-lg font-semibold ">{section.label}</p>
-                  </a>
-                </div>
-              ))}
+      <MenuDiv
+        toggleMenu={toggleMenu}
+        isMenuOpen={isMenuOpen}
+        loggedUser={loggedUser}
+        notificationPhrases={notificationPhrases}
+        toggleNotifications={toggleNotifications}
+        isNotificationsOpen={isNotificationsOpen}
+        handleRemoveNotification={handleRemoveNotification}
+        menuSections={menuSections}
+        navigate={navigate}
+        isSectionMenuOpen={isSectionMenuOpen}
+      />
 
-              {isSectionMenuOpen && (
-                <SectionMenu data={menuSections[index].data} />
-              )}
-            </div>
-          </div>
-        )}
-      </div>
-      <Dialog open={isDialogOpen} onClose={() => setDialogOpen(false)}>
-        <DialogContent>
-          <div
-            className="flex flex-col items-center justify-center"
-            style={{
-              gap: "0.75rem",
-            }}
-          >
-            <p className="text-lg font-semibold">
-              Inserisci un metodo di pagamento
-            </p>
-            <TextField
-              label="Numero carta"
-              name="numeroCarta"
-              fullWidth
-              variant="outlined"
-            />
-            <div className="flex flex-row items-center justify-center gap-4">
-              <TextField label="MM/YY" name="mese" variant="outlined" />
-              <TextField label="CVV" name="cvv" fullWidth variant="outlined" />
-            </div>
-            <div className="flex flex-row items-center justify-center gap-4">
-              <TextField label="Nome" name="nome" variant="outlined" />
-              <TextField label="Cognome" name="cognome" variant="outlined" />
-            </div>
-            <div className="flex flex-row items-center justify-center gap-4">
-              <TextField
-                label="Indirizzo"
-                name="indirizzo"
-                variant="outlined"
-              />
-              <TextField label="Città" name="citta" variant="outlined" />
-            </div>
-            <div className="flex flex-row items-center justify-center gap-4">
-              <RadioGroup row name="tipoCarta">
-                <FormControlLabel
-                  value="mastercard"
-                  control={<Radio />}
-                  label={
-                    <img
-                      src="https://www.mastercard.it/content/dam/public/mastercardcom/it/it/icons/mc-logo-52.svg"
-                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
-                    />
-                  }
-                />
-                <FormControlLabel
-                  value="visa"
-                  control={<Radio />}
-                  label={
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1200px-Visa_Inc._logo.svg.png"
-                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
-                    />
-                  }
-                />
-                <FormControlLabel
-                  value="paypal"
-                  control={<Radio />}
-                  label={
-                    <img
-                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/1200px-PayPal.svg.png"
-                      className="ml-0 h-10 w-fit rounded-xl border-2 object-contain object-center p-1"
-                    />
-                  }
-                />
-              </RadioGroup>
-            </div>
-          </div>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDialogOpen(false)}>Annulla</Button>
-          <Button
-            variant="contained"
-            onClick={() => {
-              setPaymentDone(true);
-              setDialogOpen(false);
-            }}
-          >
-            Salva
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogPagamento
+        handlers={{ isDialogOpen, setDialogOpen, setPaymentDone }}
+      />
+
+      <DialogCorse
+        handlers={{ isCorseOpen, setCorseOpen }}
+        data={{ corse, loggedUser }}
+      />
     </div>
   );
+}
+
+function MenuDiv({
+  toggleMenu,
+  isMenuOpen,
+  loggedUser,
+  notificationPhrases,
+  toggleNotifications,
+  isNotificationsOpen,
+  handleRemoveNotification,
+  menuSections,
+  navigate,
+  isSectionMenuOpen,
+}) {
+  return (
+    <div className="h-full w-fit ">
+      <button
+        className="absolute left-5 top-5 z-50 mx-auto h-12 w-12 rounded-full border border-blue-200 bg-slate-200 p-2 shadow-md"
+        onClick={toggleMenu}
+      >
+        <FaUser style={{ fontSize: "24px", marginRight: "8px" }} />
+      </button>
+      {isMenuOpen && (
+        <div className="absolute left-0 top-0 flex h-full w-fit !min-w-[20rem] flex-col items-start justify-start bg-white px-4 py-4 shadow-xl">
+          <div className="ml-16 mt-1 flex w-full flex-row items-center justify-between align-baseline">
+            <p className="mt-1">Ciao, {loggedUser?.nome}</p>
+            <div className=" mr-16 flex flex-col items-center justify-center rounded-full border bg-slate-200 p-2 shadow-md">
+              {notificationPhrases.length > 0 && (
+                <div className="absolute mb-7 ml-7 h-5 w-5 items-center rounded-full border bg-red-500">
+                  <p className="ap-px text-center text-xs font-extralight text-white">
+                    {notificationPhrases.length}
+                  </p>
+                </div>
+              )}
+              <NotificationsNoneIcon
+                style={{
+                  fontSize: "24px",
+                }}
+                onClick={toggleNotifications}
+              />
+              <div>
+                {isNotificationsOpen && (
+                  <div className=" notifiche shadow-lg  ">
+                    {notificationPhrases.map((phrase, index) => (
+                      <div
+                        key={index}
+                        className="flex flex-row items-center justify-between border-b p-2"
+                      >
+                        <p>
+                          <p className="text-md">{phrase}</p>
+                          <p className="text-xs">Testo2</p>
+                        </p>
+                        <button
+                          onClick={() => handleRemoveNotification(index)}
+                          className="text-md mb-5"
+                        >
+                          X
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
+            {menuSections.map((section, index) => (
+              <div
+                key={section.id}
+                className=" flex flex-row items-center justify-start"
+              >
+                <a
+                  href=""
+                  onClick={(e) => {
+                    e.preventDefault();
+                    section.onClick
+                      ? section.onClick()
+                      : navigate(section.path);
+                  }}
+                  className="flex flex-row items-center justify-start"
+                >
+                  <p className="text-lg font-semibold ">{section.label}</p>
+                </a>
+              </div>
+            ))}
+
+            {isSectionMenuOpen && (
+              <SectionMenu data={menuSections[index].data} />
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function formattaData(data) {
+  moment.locale("it"); // Imposta il locale in italiano
+  return moment(data).format("D/M/Y HH:mm");
 }

@@ -71,21 +71,27 @@ export const useBikeSharing = () => {
       type: "updateBici",
       payload: { ...biciInUso, isAvailable: false },
     });
+    return newCorsa;
   };
 
   const terminaCorsa = (idCorsa, costo) => {
     const fineCorsa = new Date();
-    const corsa = state.corse.find((corsa) => corsa.id === idCorsa);
-    const durata = (fineCorsa - new Date(corsa.inizioCorsa)) / 1000;
+    let corsa = state.corse.find((corsa) => corsa.id === idCorsa);
+    // calcola la durata in secondi
+    const durata = (
+      (fineCorsa.getTime() - corsa.inizioCorsa.getTime()) /
+      1000
+    ).toFixed(0);
+    corsa = { ...corsa, fineCorsa, costo, durata };
     dispatch({
       type: "updateCorsa",
-      payload: { id: idCorsa, fineCorsa, costo, durata },
+      payload: corsa,
     });
     dispatch({
       type: "updateBici",
       payload: { id: corsa.biciId, isAvailable: true },
     });
-    console.log(state);
+    console.log("Terminata corsa");
   };
 
   const generateUniqueID = () => {
