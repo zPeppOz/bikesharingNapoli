@@ -43,7 +43,9 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
         <PedalBikeIcon style={{ fontSize: "32px" }} />
       </div>
       <BottomDiv isOpen={isBottomDivOpen}>
-        {selected?.bikes && <StationInfo selected={selected} />}
+        {selected?.bikes && (
+          <StationInfo selected={selected} handlers={handlers} />
+        )}
         {selected?.battery && (
           <BikeInfo selected={selected} handlers={handlers} />
         )}
@@ -52,10 +54,7 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
   );
 }
 
-function StationInfo({ selected }) {
-  const { prenotaBicicletta, isBikeAvailable, isBikeReserved } =
-    useBikeSharing();
-
+function StationInfo({ selected, handlers }) {
   const batteryIcon = (battery) => {
     if (battery < 1) {
       battery = battery * 100;
@@ -147,15 +146,12 @@ function StationInfo({ selected }) {
                               ? "hover:bg-red-500"
                               : "hover:bg-green-600")
                           }
-                          disabled={
-                            bike.isReserved || !bike.isAvailable ? true : false
-                          }
+                          disabled={bike.isAvailable}
                           onClick={() => {
-                            prenotaBicicletta(bike.id, 1);
+                            handlers.setSelected(bike);
                           }}
                         >
                           <p className="text-md ">Prenota</p>
-                          <p className="text-sm "> Inizia corsa</p>
                         </button>
                       </TableCell>
                     </TableRow>
@@ -248,7 +244,7 @@ function BikeInfo({ selected, handlers }) {
       );
     }
   }
-  console.log(mastercard);
+  // console.log(mastercard);
 
   const [isReserved, setIsReserved] = useState(false);
   const [removePrenota, setRemovePrenota] = useState(true);
@@ -268,6 +264,22 @@ function BikeInfo({ selected, handlers }) {
   const [corsa, setCorsa] = useState({});
   const [tempo, setTempo] = useState("00:00");
   const [costo, setCosto] = useState("0.00");
+
+  const handleTerminaCorsa = () => {
+    terminaCorsa(corsa.id, costo);
+    setCorsa({});
+    setTempo("00:00");
+    setCosto("0.00");
+    handleRemoveContainer();
+    handleIsReserved();
+    handleRemovePrenota();
+  };
+
+  const handleIniziaCorsa = () => {
+    let c = iniziaCorsa(selected.id, 1);
+    setCorsa(c);
+    handleRemoveContainer();
+  };
 
   const calcolaTempo = () => {
     let ora = new Date();
@@ -300,7 +312,7 @@ function BikeInfo({ selected, handlers }) {
   };
 
   useEffect(() => {
-    if (corsa.inizioCorsa) {
+    if (corsa && corsa.inizioCorsa) {
       // calcola il tempo ogni secondo
       const interval = setInterval(() => {
         calcolaTempo();
@@ -310,17 +322,22 @@ function BikeInfo({ selected, handlers }) {
     }
   }, [corsa]);
 
-  useEffect(() => {
-    if (!removeContainer) {
-      let c = state.corse.find((corsa) => corsa.biciId === selected.id);
-      console.log(c);
-      setCorsa(c);
-    }
+  // useEffect(() => {
+  //   if (!removeContainer) {
+  //     let c = state.corse.find(
+  //       (corsa) =>
+  //         corsa.id === selected.id &&
+  //         corsa.utenteId === loggedUser.id &&
+  //         corsa.fineCorsa === null
+  //     );
+  //     console.log(c);
+  //     setCorsa(c);
+  //   }
 
-    return () => {
-      setCorsa({});
-    };
-  }, [removeContainer]);
+  //   return () => {
+  //     setCorsa({});
+  //   };
+  // }, [removeContainer]);
 
   return (
     <div>
@@ -362,7 +379,7 @@ function BikeInfo({ selected, handlers }) {
                 <>
                   <button
                     className="flex h-fit w-full flex-col items-center justify-center rounded-2xl bg-green-500 py-1"
-                    disabled={!isBikeAvailable(selected.id)}
+                    disabled={!isBikeAvailable(selected.id) && loggedUser}
                     onClick={() => {
                       if (
                         state.utenti.find(
@@ -388,8 +405,7 @@ function BikeInfo({ selected, handlers }) {
                 <button
                   className="flex h-fit w-full border-spacing-3 flex-col items-center justify-center rounded-2xl bg-green-300 py-1"
                   onClick={() => {
-                    iniziaCorsa(selected.id, 1);
-                    handleRemoveContainer();
+                    handleIniziaCorsa();
                   }}
                 >
                   <p className="font-semibold- text-lg">INIZIA CORSA</p>
@@ -420,8 +436,7 @@ function BikeInfo({ selected, handlers }) {
               className="flex h-full w-full flex-row items-center justify-center rounded-xl border bg-red-500 p-2"
               onClick={() => {
                 // ferma la corsa
-                terminaCorsa(corsa.id, costo);
-                handleRemoveContainer();
+                handleTerminaCorsa();
               }}
             >
               <p className="text-md  text-gray-200">Interrompi Corsa</p>

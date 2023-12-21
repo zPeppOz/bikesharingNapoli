@@ -166,6 +166,7 @@ export default function GlobalContextProvider({ children }) {
           ],
         };
       case "addCorsa":
+        console.log(action.payload);
         return {
           ...state,
           corse: [
@@ -184,14 +185,21 @@ export default function GlobalContextProvider({ children }) {
           },
         };
       case "updateCorsa":
-        // find index of object
-        const corsa = state.corse.find(
+        let corse = [...state.corse];
+        const indexCorsa = state.corse.findIndex(
           (corsa) => corsa.id === action.payload.id
         );
+        corse[indexCorsa] = action.payload;
         return {
           ...state,
-          corse: [...state.corse, { ...corsa, ...action.payload }],
+          corse: corse,
         };
+      // const indexCorsa = state.corse.findIndex(
+      //   (corsa) => corsa.id === action.payload.id
+      // );
+      // state.corse[indexCorsa] = action.payload;
+      // console.log(state.corse[indexCorsa], indexCorsa);
+
       case "addNotifica":
         return {
           ...state,
