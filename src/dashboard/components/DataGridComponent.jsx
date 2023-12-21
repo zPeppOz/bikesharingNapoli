@@ -15,6 +15,7 @@ export default function DataGridComponent(props) {
   // // Ho inizializzato newRowData come un oggetto vuoto ({}) perché non so quali colonne ci saranno.
   // In questo modo, possiamo utilizzare il componente per diverse colonne dinamicamente.
   const [newRowData, setNewRowData] = useState({});
+  const [selectedRows, setSelectedRows] = useState([]);
 
   const handleAddRow = () => {
     // Apri la finestra modale per l'inserimento dei dati
@@ -37,11 +38,32 @@ export default function DataGridComponent(props) {
     setNewRowData({ ...newRowData, [e.target.name]: e.target.value });
   };
 
+  const handleRemoveRow = () => {
+    // Rimuovi le righe selezionate
+    const updatedRows = rows.filter((row) => !selectedRows.includes(row.id));
+    setRows(updatedRows);
+    // Deseleziona tutte le righe
+    setSelectedRows([]);
+  };
+
+  // ...
+
+  const handleCheckboxChange = (selection) => {
+    setSelectedRows(selection);
+  };
+
   return (
     <div>
       <div style={{ marginBottom: "10px" }}>
         <Button variant="contained" onClick={handleAddRow}>
           Aggiungi Riga
+        </Button>
+      </div>
+
+      {/* bottone per eliminare le/la riga selezionata */}
+      <div style={{ marginBottom: "10px" }}>
+        <Button variant="contained" onClick={handleRemoveRow}>
+          Elimina Riga
         </Button>
       </div>
 
@@ -80,8 +102,12 @@ export default function DataGridComponent(props) {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
+          onSelectionModelChange={handleCheckboxChange}
+          selectionModel={selectedRows}
         />
       </div>
+
+      {/* crea un bottone   */}
     </div>
   );
 }

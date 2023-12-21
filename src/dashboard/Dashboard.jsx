@@ -11,7 +11,7 @@ import logo from "../assets/easyLogo2.png";
 
 export default function Dashboard() {
   const { bici, stazioni, ticket, utenti, dispatch } =
-  useContext(GlobalContext);
+    useContext(GlobalContext);
   const [isUtentiOpen, setUtentiOpen] = useState(false);
   const [isBicicletteOpen, setBicicletteOpen] = useState(false);
   const [isStazioniOpen, setStazioniOpen] = useState(false);
@@ -23,7 +23,7 @@ export default function Dashboard() {
     { field: "nome", headerName: "Nome", width: 150 },
     { field: "cognome", headerName: "Cognome", width: 150 },
     { field: "username", headerName: "Username", width: 300 },
-    { field: "password", headerName: "Password", width: 300 },
+    { field: "password", headerName: "Password", width: 150 },
     { field: "prenotazioni", headerName: "Prenotazioni", width: 300 },
     { field: "corse", headerName: "Corse", width: 300 },
     { field: "ruolo", headerName: "Ruolo", width: 300 },
@@ -40,7 +40,15 @@ export default function Dashboard() {
     { field: "id", headerName: "ID", width: 150 },
     { field: "name", headerName: "Nome", width: 150 },
     { field: "lat", headerName: "Latitudine", width: 150 },
-    { field: "lng", headerName: "Longitudine", width: 300 },
+    { field: "lng", headerName: "Longitudine", width: 100 },
+    {
+      field: "bici",
+      headerName: "Biciclette",
+      width: 150,
+      valueGetter: (params) => {
+        return params.row.bikes.filter((bike) => bike.isVisible).length;
+      },
+    },
   ];
 
   const colonneTicket = [
@@ -104,7 +112,7 @@ export default function Dashboard() {
         {isUtentiOpen && (
           <div>
             <h1> UTENTI </h1>
-            <div style={{ height: "100%", width: "100%" }}>
+            <div style={{ height: "80%", width: "100%" }}>
               <DataGridComponent rows={utenti} columns={colonneUtenti} />
             </div>
           </div>
@@ -113,7 +121,7 @@ export default function Dashboard() {
         {isBicicletteOpen && (
           <div>
             <h1> BICICLETTE </h1>
-            <div style={{ height: "100%", width: "100%" }}>
+            <div style={{ height: "80%", width: "100%" }}>
               <DataGridComponent rows={bici} columns={colonneBiciclette} />
             </div>
           </div>
@@ -122,7 +130,7 @@ export default function Dashboard() {
         {isStazioniOpen && (
           <div>
             <h1> STAZIONI </h1>
-            <div style={{ height: "100%", width: "100%" }}>
+            <div style={{ height: "80%", width: "100%" }}>
               <DataGridComponent rows={stazioni} columns={colonneStazioni} />
             </div>
           </div>
@@ -131,7 +139,7 @@ export default function Dashboard() {
         {isTicketOpen && (
           <div>
             <h1> TICKET </h1>
-            <div style={{ height: "100%", width: "100%" }}>
+            <div style={{ height: "80%", width: "100%" }}>
               {/* Richiama il componente DataGridComponent con i dati del ticket */}
               <DataGridComponent rows={ticket} columns={colonneTicket} />
             </div>
