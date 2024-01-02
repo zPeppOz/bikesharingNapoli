@@ -17,6 +17,7 @@ export default function MapMarker({ obj, eventHandlers, icon }) {
 
   return (
     <>
+    
       <Marker
         position={[obj.lat, obj.lng]}
         icon={icon}
