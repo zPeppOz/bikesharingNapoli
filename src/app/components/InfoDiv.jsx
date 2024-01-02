@@ -5,7 +5,7 @@ import { BottomDiv } from "./BottomDiv.jsx";
 import BikeIMG from "../../assets/bike_real.png";
 import mastercard from "../../assets/mastercard-logo.svg";
 import station from "../../assets/station2.png";
-import PedalBikeIcon from "@mui/icons-material/PedalBikeRounded.js";
+import QrCodeScannerIcon from "@mui/icons-material/QrCodeScanner";
 import {
   SvgIcon,
   Table,
@@ -17,8 +17,15 @@ import {
 } from "@mui/material";
 
 export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
+  const { state } = useContext(GlobalContext);
   const divRef = useRef();
   const isPhone = window.innerWidth < 768;
+  const [showQrDialog, setShowQrDialog] = useState(false);
+
+  const handleShowQrDialog = () => {
+    setShowQrDialog(!showQrDialog);
+  };
+
   useEffect(() => {
     if (isPhone) {
       if (isBottomDivOpen) {
@@ -32,15 +39,36 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
     console.log(isBottomDivOpen, isPhone);
   }, [isBottomDivOpen, isPhone]);
 
+  useEffect(() => {
+    console.log(showQrDialog);
+  }, [showQrDialog]);
+
+  function onResult(obj) {
+    if (obj) {
+      const bicicletta = JSON.parse(obj);
+      let bici = state.bici.find((b) => (b.id = bicicletta.biciId));
+      console.log(bicicletta.biciId, bici);
+      handlers.setSelected(bici);
+      setShowQrDialog(false);
+      handlers.showBottomDiv();
+    }
+  }
+
   return (
     <>
       <div
         ref={divRef}
         className={
-          "absolute bottom-8 right-6 h-auto w-fit rounded-full border bg-slate-300 p-2 shadow-lg transition-all duration-500"
+          "absolute bottom-8 right-6 h-auto w-fit rounded-full border border-green-400 bg-green-400 p-2 shadow-lg transition-all duration-500"
         }
+        onClick={() => {
+          handleShowQrDialog();
+        }}
       >
-        <PedalBikeIcon style={{ fontSize: "32px" }} />
+        <QrCodeScannerIcon
+          style={{ fontSize: "32px" }}
+          className="cursor-pointer"
+        />
       </div>
       <BottomDiv isOpen={isBottomDivOpen}>
         {selected?.bikes && (
@@ -50,6 +78,14 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
           <BikeInfo selected={selected} handlers={handlers} />
         )}
       </BottomDiv>
+
+      <QRReaderDialog
+        showQrDialog={showQrDialog}
+        setShowQrDialog={setShowQrDialog}
+        hideDialog={handleShowQrDialog}
+        onResult={onResult}
+        data={{}}
+      />
     </>
   );
 }
@@ -62,21 +98,21 @@ function StationInfo({ selected, handlers }) {
     }
     if (battery < 20) {
       return (
-        <p className="inline-flex h-fit w-20 flex-row">
+        <p className="inline-flex h-20 w-20 flex-row">
           <Battery1BarSharp className="rotate-90 text-red-500" />
           <span className="text-red-500">{battery}%</span>
         </p>
       );
     } else if (battery < 40) {
       return (
-        <p className="inline-flex h-fit  flex-row">
+        <p className="inline-flex h-20 w-20 flex-row">
           <Battery3BarSharp className="rotate-90 text-orange-500" />
           <span className="text-orange-500">{battery}%</span>
         </p>
       );
     } else if (battery < 60) {
       return (
-        <p className="inline-flex h-fit  flex-row">
+        <p className="inline-flex h-20  flex-row">
           <Battery5BarSharp className="rotate-90 text-yellow-500" />
           <span className="text-yellow-500">{battery}%</span>
         </p>
@@ -176,6 +212,7 @@ import {
 import TimerSharpIcon from "@mui/icons-material/TimerSharp";
 import { useBikeSharing } from "../../hooks/ridesHook.jsx";
 import { GlobalContext } from "../../providers/GlobalContext.jsx";
+import QRReaderDialog from "./QRReaderDialog.jsx";
 
 function BikeInfo({ selected, handlers }) {
   const { iniziaCorsa, isBikeAvailable, terminaCorsa } = useBikeSharing();

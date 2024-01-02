@@ -206,18 +206,6 @@ export default function MainApp(props) {
           setSelected,
         }}
       />
-      {/* {MenuDiv(
-        toggleMenu,
-        isMenuOpen,
-        loggedUser,
-        notificationPhrases,
-        toggleNotifications,
-        isNotificationsOpen,
-        handleRemoveNotification,
-        menuSections,
-        navigate,
-        isSectionMenuOpen
-      )} */}
 
       <MenuDiv
         toggleMenu={toggleMenu}

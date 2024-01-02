@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "host": "vite --host"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
@@ -29,9 +30,12 @@
     "react-icons": "^4.12.0",
     "react-leaflet": "^4.2.1",
     "react-leaflet-enhanced-marker": "^1.0.21",
-    "react-router-dom": "^6.18.0"
+    "react-qr-reader": "^3.0.0-beta-1",
+    "react-router-dom": "^6.18.0",
+    "webrtc-adapter": "^8.2.3"
   },
   "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.0.2",
     "@vitejs/plugin-react": "^1.0.7",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.1.13",

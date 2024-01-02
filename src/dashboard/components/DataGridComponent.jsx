@@ -22,7 +22,7 @@ export default function DataGridComponent(props) {
   };
 
   const handleSaveRow = () => {
-    // Chiudi la finestra modale e aggiungi la nuova riga
+    // Chiudi la finestra e e aggiungi la nuova riga
     const newRows = [...rows, { id: rows.length + 1, ...newRowData }];
     setRows(newRows);
     setDialogOpen(false);
