@@ -123,6 +123,14 @@ export default function GlobalContextProvider({ children }) {
           ...state,
           loggedUser: action.payload,
         };
+
+      case "logoutUtente":
+        localStorage.removeItem("loggedUser");
+        return {
+          ...state,
+          loggedUser: null,
+        };
+
       case "updateUtente":
         return {
           ...state,

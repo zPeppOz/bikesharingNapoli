@@ -37,7 +37,8 @@ export default function MainApp(props) {
     corse,
   } = useContext(GlobalContext);
   const navigate = useNavigate();
-  const menuSections = [
+
+  const [menuSections, setMenuSections] = useState([
     {
       id: 1,
       label: "Home",
@@ -59,16 +60,30 @@ export default function MainApp(props) {
       },
     },
     {
-      id: 4,
-      label: "Dashboard",
+      id: 5,
+      label: "Logout",
       onClick: () => {
-        navigate("/dash");
+        dispatch({ type: "logoutUtente" });
+        navigate("/");
       },
-      role: "admin",
     },
-
     // Aggiungi altre sezioni del menu come necessario
-  ];
+  ]);
+
+  useEffect(() => {
+    if (loggedUser && loggedUser.ruolo === "admin") {
+      let obj = {
+        id: 4,
+        label: "Dashboard",
+        onClick: () => {
+          navigate("/dash");
+        },
+      };
+      let arr = [...menuSections, obj];
+      arr.sort((a, b) => a.id - b.id);
+      setMenuSections(arr);
+    }
+  }, [loggedUser]);
 
   //variabile per la lvisualizzazione del SectionMenu
   const [isSectionMenuOpen, setSectionMenuOpen] = useState(false);
@@ -318,29 +333,28 @@ function MenuDiv({
           </div>
 
           <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
-            {menuSections
-              .map((s) => {
-                if (s.role && s.role !== loggedUser?.ruolo) return null;
-              })
-              .map((section, index) => (
-                <div
-                  key={section.id}
-                  className=" flex flex-row items-center justify-start"
-                >
-                  <a
-                    href=""
-                    onClick={(e) => {
-                      e.preventDefault();
-                      section.onClick
-                        ? section.onClick()
-                        : navigate(section.path);
-                    }}
-                    className="flex flex-row items-center justify-start"
+            {menuSections.map(
+              (section, index) =>
+                section !== null && (
+                  <div
+                    key={section.id}
+                    className=" flex flex-row items-center justify-start"
                   >
-                    <p className="text-lg font-semibold ">{section.label}</p>
-                  </a>
-                </div>
-              ))}
+                    <a
+                      href=""
+                      onClick={(e) => {
+                        e.preventDefault();
+                        section.onClick
+                          ? section.onClick()
+                          : navigate(section.path);
+                      }}
+                      className="flex flex-row items-center justify-start"
+                    >
+                      <p className="text-lg font-semibold ">{section.label}</p>
+                    </a>
+                  </div>
+                )
+            )}
 
             {isSectionMenuOpen && (
               <SectionMenu data={menuSections[index].data} />
