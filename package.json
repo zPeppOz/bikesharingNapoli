@@ -32,5 +32,11 @@
     "tailwindcss": "^3.3.5",
     "vitawind": "^2.2.4",
     "vite": "^3.0.0"
+  },
+  "overrides": {
+    "react-qr-reader": {
+      "react": "$react",
+      "react-dom": "$react-dom"
+    }
   }
 }
