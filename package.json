@@ -11,6 +11,7 @@
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
     "@mui/x-data-grid": "^6.18.4",
+    "@vercel/speed-insights": "^1.0.4",
     "i": "^0.3.7",
     "leaflet": "^1.9.4",
     "moment": "^2.29.4",

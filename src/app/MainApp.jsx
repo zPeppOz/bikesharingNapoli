@@ -64,6 +64,7 @@ export default function MainApp(props) {
       onClick: () => {
         navigate("/dash");
       },
+      role: "admin",
     },
 
     // Aggiungi altre sezioni del menu come necessario
@@ -317,25 +318,29 @@ function MenuDiv({
           </div>
 
           <div className="ml-2 mt-16 flex flex-col items-start justify-start gap-6">
-            {menuSections.map((section, index) => (
-              <div
-                key={section.id}
-                className=" flex flex-row items-center justify-start"
-              >
-                <a
-                  href=""
-                  onClick={(e) => {
-                    e.preventDefault();
-                    section.onClick
-                      ? section.onClick()
-                      : navigate(section.path);
-                  }}
-                  className="flex flex-row items-center justify-start"
+            {menuSections
+              .map((s) => {
+                if (s.role && s.role !== loggedUser?.ruolo) return null;
+              })
+              .map((section, index) => (
+                <div
+                  key={section.id}
+                  className=" flex flex-row items-center justify-start"
                 >
-                  <p className="text-lg font-semibold ">{section.label}</p>
-                </a>
-              </div>
-            ))}
+                  <a
+                    href=""
+                    onClick={(e) => {
+                      e.preventDefault();
+                      section.onClick
+                        ? section.onClick()
+                        : navigate(section.path);
+                    }}
+                    className="flex flex-row items-center justify-start"
+                  >
+                    <p className="text-lg font-semibold ">{section.label}</p>
+                  </a>
+                </div>
+              ))}
 
             {isSectionMenuOpen && (
               <SectionMenu data={menuSections[index].data} />
