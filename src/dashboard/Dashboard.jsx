@@ -15,7 +15,7 @@ export default function Dashboard() {
   const [isUtentiOpen, setUtentiOpen] = useState(false);
   const [isBicicletteOpen, setBicicletteOpen] = useState(false);
   const [isStazioniOpen, setStazioniOpen] = useState(false);
-  const [isTicketOpen, setTicketOpen] = useState(false);
+  const [isTicketOpen, setTicketOpen] = useState(true);
   const value = useContext(GlobalContext);
 
   const colonneUtenti = [
@@ -24,9 +24,6 @@ export default function Dashboard() {
     { field: "cognome", headerName: "Cognome", width: 150 },
     { field: "username", headerName: "Username", width: 300 },
     { field: "password", headerName: "Password", width: 150 },
-    { field: "prenotazioni", headerName: "Prenotazioni", width: 300 },
-    { field: "corse", headerName: "Corse", width: 300 },
-    { field: "ruolo", headerName: "Ruolo", width: 300 },
   ];
 
   const colonneBiciclette = [
@@ -53,7 +50,7 @@ export default function Dashboard() {
 
   const colonneTicket = [
     { field: "id", headerName: "ID", width: 150 },
-    { field: "Bicicleta", headerName: "Bici", width: 150 },
+    { field: "Bicicletta", headerName: "Bici", width: 150 },
     { field: "data", headerName: "Data", width: 150 },
     { field: "descrizione", headerName: "descrizione", width: 300 },
   ];
@@ -92,14 +89,20 @@ export default function Dashboard() {
     dispatch({ type: "removeBici", payload: id });
   };
 
-  // useEffect(() => {
-  //   console.log("Bici", bici);
-  // }, [bici]);
-
   return (
     <div className="dashboard-container">
       <div className="sidebar">
-        <img src={logo} alt="logo" />
+        <img
+          src={logo}
+          alt="logo"
+          style={{
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            window.location.href = "/app";
+          }}
+          title="Torna all'app"
+        />
         <ul>
           <li onClick={toggleUtenti}>Utenti</li>
           <li onClick={toggleBiciclette}>Biciclette</li>

@@ -2,7 +2,6 @@ import React from "react";
 import "../css/MainApp.css";
 
 function SectionMenu({ data }) {
-  console.log(data);
   return (
     <div
       className="section-menu"

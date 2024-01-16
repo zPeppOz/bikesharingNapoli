@@ -166,7 +166,6 @@ export default function GlobalContextProvider({ children }) {
           ],
         };
       case "addCorsa":
-        console.log(action.payload);
         return {
           ...state,
           corse: [
@@ -194,11 +193,6 @@ export default function GlobalContextProvider({ children }) {
           ...state,
           corse: corse,
         };
-      // const indexCorsa = state.corse.findIndex(
-      //   (corsa) => corsa.id === action.payload.id
-      // );
-      // state.corse[indexCorsa] = action.payload;
-      // console.log(state.corse[indexCorsa], indexCorsa);
 
       case "addNotifica":
         return {
@@ -219,6 +213,22 @@ export default function GlobalContextProvider({ children }) {
           },
         };
 
+      case "openTicket":
+        return {
+          ...state,
+          isTicketOpen: true,
+        };
+      case "closeTicket":
+        return {
+          ...state,
+          isTicketOpen: false,
+        };
+      case "toggleTicket":
+        return {
+          ...state,
+          isTicketOpen: !state.isTicketOpen,
+        };
+
       default:
         return state;
     }
@@ -230,6 +240,8 @@ export default function GlobalContextProvider({ children }) {
     prenotazioni: prenotazioni,
     utenti: utenti,
     ticket: ticket,
+    isTicketOpen: false,
+
     loggedUser: JSON.parse(localStorage.getItem("loggedUser")) || null,
     corse: [],
     notifiche: [],

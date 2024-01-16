@@ -17,6 +17,8 @@ export default function DataGridComponent(props) {
   const [newRowData, setNewRowData] = useState({});
   const [selectedRows, setSelectedRows] = useState([]);
 
+  console.log(selectedRows);
+
   const handleAddRow = () => {
     // Apri la finestra modale per l'inserimento dei dati
     setDialogOpen(true);
@@ -45,8 +47,6 @@ export default function DataGridComponent(props) {
     // Deseleziona tutte le righe
     setSelectedRows([]);
   };
-
-  // ...
 
   const handleCheckboxChange = (selection) => {
     setSelectedRows(selection);
@@ -102,7 +102,7 @@ export default function DataGridComponent(props) {
           pageSize={5}
           rowsPerPageOptions={[5]}
           checkboxSelection
-          onSelectionModelChange={handleCheckboxChange}
+          onRowSelectionModelChange={handleCheckboxChange}
           selectionModel={selectedRows}
         />
       </div>

@@ -9,22 +9,6 @@ export default function QRReaderDialog({
 }) {
   const isPhone = window.innerWidth < 768;
 
-  // useEffect(() => {
-  //   console.group("QRReaderDialog props:");
-  //   console.log("showQrDialog:",@ showQrDialog);
-  //   console.log("setShowQrDialog:", setShowQrDialog);
-  //   console.log("hideDialog:", hideDialog);
-  //   console.log("data:", data);
-  //   console.groupEnd();
-  // }, [showQrDialog, setShowQrDialog, hideDialog, data]);
-
-  // const onResult = (result) => {
-  //   if (result.biciId) {
-  //     returnID(result.biciId);
-  //     hideDialog();
-  //   }
-  // };
-
   return (
     <>
       <Dialog
@@ -44,7 +28,9 @@ export default function QRReaderDialog({
               console.error(err);
             }}
             onResult={onResult}
-            constraints={{ facingMode: "environment" }}
+            constraints={{
+              facingMode: "environment",
+            }}
             videoContainerStyle={{
               height: "650px",
               width: "400px",

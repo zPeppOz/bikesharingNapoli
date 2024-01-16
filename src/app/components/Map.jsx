@@ -29,7 +29,6 @@ export default function Map({ biciclette, stazioni, handlers }) {
 
   useEffect(() => {
     if (biciclette && stazioni) {
-      console.log("biciclette", biciclette);
       setIsLoading(false);
     }
   }, [biciclette, stazioni]);

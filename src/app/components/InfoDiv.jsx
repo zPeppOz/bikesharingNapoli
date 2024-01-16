@@ -30,24 +30,16 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
     if (isPhone) {
       if (isBottomDivOpen) {
         divRef.current.classList.add("mb-48");
-        console.log("added mb-48");
       } else {
         divRef.current.classList.remove("mb-48");
-        console.log("removed mb-48");
       }
     }
-    console.log(isBottomDivOpen, isPhone);
   }, [isBottomDivOpen, isPhone]);
-
-  useEffect(() => {
-    console.log(showQrDialog);
-  }, [showQrDialog]);
 
   function onResult(obj) {
     if (obj) {
       const bicicletta = JSON.parse(obj);
       let bici = state.bici.find((b) => (b.id = bicicletta.biciId));
-      console.log(bicicletta.biciId, bici);
       handlers.setSelected(bici);
       setShowQrDialog(false);
       handlers.showBottomDiv();
@@ -217,6 +209,7 @@ import QRReaderDialog from "./QRReaderDialog.jsx";
 function BikeInfo({ selected, handlers }) {
   const { iniziaCorsa, isBikeAvailable, terminaCorsa } = useBikeSharing();
   const { state, loggedUser } = useContext(GlobalContext);
+
   useEffect(() => {
     if (selected.battery < 1) {
       selected.battery = selected.battery * 100;
@@ -281,7 +274,6 @@ function BikeInfo({ selected, handlers }) {
       );
     }
   }
-  // console.log(mastercard);
 
   const [isReserved, setIsReserved] = useState(false);
   const [removePrenota, setRemovePrenota] = useState(true);
@@ -359,23 +351,6 @@ function BikeInfo({ selected, handlers }) {
     }
   }, [corsa]);
 
-  // useEffect(() => {
-  //   if (!removeContainer) {
-  //     let c = state.corse.find(
-  //       (corsa) =>
-  //         corsa.id === selected.id &&
-  //         corsa.utenteId === loggedUser.id &&
-  //         corsa.fineCorsa === null
-  //     );
-  //     console.log(c);
-  //     setCorsa(c);
-  //   }
-
-  //   return () => {
-  //     setCorsa({});
-  //   };
-  // }, [removeContainer]);
-
   return (
     <div>
       {removeContainer && (
@@ -407,7 +382,7 @@ function BikeInfo({ selected, handlers }) {
                   className="-mt-2 h-auto w-24 object-contain object-center md:w-28"
                   alt="bike"
                 />
-                <ReportButton />
+                <ReportButton bike={selected} />
               </div>
             </div>
 
@@ -445,8 +420,9 @@ function BikeInfo({ selected, handlers }) {
                     handleIniziaCorsa();
                   }}
                 >
-                  <p className="font-semibold- text-lg">INIZIA CORSA</p>
-                  <p className="text-md font-normal">muoviti dio</p>
+                  <p className="font-semibold- text-lg">
+                    Premi per iniziare la corsa
+                  </p>
                 </button>
               )}
             </div>
@@ -468,7 +444,7 @@ function BikeInfo({ selected, handlers }) {
             </p>
           </div>
           <div className="flex h-full w-full flex-row items-center justify-around">
-            <ReportButton className="w-full justify-center" />
+            <ReportButton className="w-full justify-center" bike={selected} />
             <button
               className="flex h-full w-full flex-row items-center justify-center rounded-xl border bg-red-500 p-2"
               onClick={() => {
@@ -484,13 +460,20 @@ function BikeInfo({ selected, handlers }) {
     </div>
   );
 }
+
+import { useTickets } from "../../hooks/ticketHook.jsx";
+
 function ReportButton(props) {
+  const { toggleDialog } = useTickets();
   return (
     <button
       className={
         "flex flex-row items-center rounded-xl border bg-gray-300 p-2 " +
         (props.className && props.className)
       }
+      onClick={() => {
+        toggleDialog();
+      }}
     >
       <ReportProblemSharp className="text-gray-600 " />
       <p className="ml-1 text-xs text-gray-600">Segnala un problema</p>

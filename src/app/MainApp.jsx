@@ -25,6 +25,7 @@ import { useUsers } from "../hooks/usersHook.jsx";
 import { useNavigate } from "react-router-dom";
 import { DialogCorse } from "./components/DialogCorse.jsx";
 import { DialogPagamento } from "./components/DialogPagamento.jsx";
+import DialogTicket from "./components/DialogTicket.jsx";
 
 export default function MainApp(props) {
   const {
@@ -55,6 +56,13 @@ export default function MainApp(props) {
       label: "Corse",
       onClick: () => {
         setCorseOpen(true);
+      },
+    },
+    {
+      id: 4,
+      label: "Dashboard",
+      onClick: () => {
+        navigate("/dash");
       },
     },
 
@@ -108,7 +116,6 @@ export default function MainApp(props) {
   const [selected, setSelected] = useState(null);
 
   const handleMarkerClick = (marker) => {
-    console.log(selected, marker);
     if (selected === marker) {
       setSelected(null);
       hideBottomDiv();
@@ -141,7 +148,7 @@ export default function MainApp(props) {
 
       // Aggiungi la nuova frase all'array delle notifiche
       setNotificationPhrases((prevPhrases) => [...prevPhrases, newPhrase]);
-    }, 50000);
+    }, 5000);
 
     // Pulisce l'intervallo quando il componente si smonta
     return () => clearInterval(intervalId);
@@ -161,7 +168,6 @@ export default function MainApp(props) {
 
   useEffect(() => {
     if (paymentDone) {
-      console.log("Pagamento effettuato");
       utenti.find((utente) => utente.id === loggedUser.id).pagamento = true;
       dispatch({
         type: "updateUtente",
@@ -169,6 +175,19 @@ export default function MainApp(props) {
       });
     }
   }, [paymentDone]);
+
+  // if (!loggedUser) {
+  //   alert("Devi prima effettuare il login");
+  //   navigate("/login");
+  // }
+
+  // check on load if user is logged in
+  useEffect(() => {
+    if (!loggedUser) {
+      alert("Devi prima effettuare il login");
+      navigate("/login");
+    }
+  }, []);
 
   return (
     <div className="h-screen w-screen overflow-hidden">
@@ -228,6 +247,7 @@ export default function MainApp(props) {
         handlers={{ isCorseOpen, setCorseOpen }}
         data={{ corse, loggedUser }}
       />
+      <DialogTicket bike={selected} />
     </div>
   );
 }
@@ -272,7 +292,7 @@ function MenuDiv({
               />
               <div>
                 {isNotificationsOpen && (
-                  <div className=" notifiche shadow-lg  ">
+                  <div className="absolute left-56 top-20 max-h-96 w-40 overflow-auto rounded-lg bg-white shadow-lg md:left-[290px] md:top-[20px] md:h-[200px] md:w-[250px]">
                     {notificationPhrases.map((phrase, index) => (
                       <div
                         key={index}

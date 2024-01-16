@@ -18,7 +18,6 @@ export function BottomDiv(props) {
         divRef.current.classList.remove("absolute");
       }, 200);
     }
-    console.log("BottomDiv is open: ", props.isOpen);
   }, [props.isOpen]);
 
   return (

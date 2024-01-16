@@ -17,7 +17,6 @@ export default function ShowMarkers(props) {
   return (
     <>
       {props.data.map((m) => {
-        console.log(m);
         return (
           <>
             <Marker

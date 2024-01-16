@@ -24,32 +24,6 @@ export const useBikeSharing = () => {
     return state.bici[idBici].isReserved;
   };
 
-  // const prenotaBicicletta = (idBici, idUtente) => {
-  //   const nuovaPrenotazione = {
-  //     id: generateUniqueID(),
-  //     biciId: idBici,
-  //     utenteId: idUtente,
-  //     oraPrenotazione: new Date(),
-  //   };
-  //   console.log(nuovaPrenotazione);
-  //   const bici = state.bici.find((bici) => bici.id === idBici);
-  //   console.log(state.utenti);
-  //   const utente = state.utenti.find((utente) => utente.id === idUtente);
-
-  //   utente.prenotazioni.push(nuovaPrenotazione.id);
-  //   dispatch({
-  //     type: "updateBici",
-  //     payload: { ...bici, isReserved: true },
-  //   });
-  //   dispatch({
-  //     type: "updateUtente",
-  //     payload: {
-  //       utente,
-  //     },
-  //   });
-  //   dispatch({ type: "addPrenotazione", payload: nuovaPrenotazione });
-  // };
-
   const iniziaCorsa = (idBici, idUtente) => {
     // dispatch({
     //   type: "updatePrenotazione",
@@ -91,7 +65,6 @@ export const useBikeSharing = () => {
       type: "updateBici",
       payload: { id: corsa.biciId, isAvailable: true },
     });
-    console.log("Terminata corsa");
   };
 
   const generateUniqueID = () => {

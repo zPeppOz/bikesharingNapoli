@@ -1,61 +1,61 @@
 [
   {
-    "id": "1",
-    "Bicicleta": "1",
+    "id": 1,
+    "Bicicletta": 1,
     "data": "2019-10-10",
     "descrizione": "Foratura della ruota anteriore in via Milano 2"
   },
   {
-    "id": "2",
-    "Bicicleta": "2",
+    "id": 2,
+    "Bicicletta": 2,
     "data": "2019-10-10",
     "descrizione": "Problemi ai freni in via Napoli 5"
   },
   {
-    "id": "3",
-    "Bicicleta": "3",
+    "id": 3,
+    "Bicicletta": 3,
     "data": "2019-10-10",
     "descrizione": "Catena saltata in via Palermo 3"
   },
   {
-    "id": "4",
-    "Bicicleta": "4",
+    "id": 4,
+    "Bicicletta": 4,
     "data": "2019-10-10",
     "descrizione": "Problemi al cambio in via Firenze 7"
   },
   {
-    "id": "5",
-    "Bicicleta": "5",
+    "id": 5,
+    "Bicicletta": 5,
     "data": "2019-10-10",
     "descrizione": "Ammaccatura al telaio in via Bologna 9"
   },
   {
-    "id": "6",
-    "Bicicleta": "6",
+    "id": 6,
+    "Bicicletta": 6,
     "data": "2019-10-10",
     "descrizione": "Luci posteriori non funzionanti in via Roma 6"
   },
   {
-    "id": "7",
-    "Bicicleta": "7",
+    "id": 7,
+    "Bicicletta": 7,
     "data": "2019-10-10",
     "descrizione": "Problemi al sellino in via Torino 4"
   },
   {
-    "id": "8",
-    "Bicicleta": "8",
+    "id": 8,
+    "Bicicletta": 8,
     "data": "2019-10-10",
     "descrizione": "Manubrio instabile in via Genova 1"
   },
   {
-    "id": "9",
-    "Bicicleta": "9",
+    "id": 9,
+    "Bicicletta": 9,
     "data": "2019-10-10",
     "descrizione": "Perdita di pressione nelle gomme in via Venezia 8"
   },
   {
-    "id": "10",
-    "Bicicleta": "10",
+    "id": 10,
+    "Bicicletta": 10,
     "data": "2019-10-10",
     "descrizione": "Rumori strani dal mozzo in via Turin 12"
   }
