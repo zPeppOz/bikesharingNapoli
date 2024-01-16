@@ -71,7 +71,11 @@ export default function MainApp(props) {
   ]);
 
   useEffect(() => {
-    if (loggedUser && loggedUser.ruolo === "admin") {
+    if (
+      loggedUser &&
+      loggedUser.ruolo === "admin" &&
+      menuSections.find((section) => section.id === 4) === undefined
+    ) {
       let obj = {
         id: 4,
         label: "Dashboard",
@@ -83,7 +87,7 @@ export default function MainApp(props) {
       arr.sort((a, b) => a.id - b.id);
       setMenuSections(arr);
     }
-  }, [loggedUser]);
+  });
 
   //variabile per la lvisualizzazione del SectionMenu
   const [isSectionMenuOpen, setSectionMenuOpen] = useState(false);
