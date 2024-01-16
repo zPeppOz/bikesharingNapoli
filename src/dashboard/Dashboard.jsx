@@ -4,12 +4,14 @@ import DataGridComponent from "./components/DataGridComponent";
 import { GlobalContext } from "../providers/GlobalContext";
 //immprta logo da assets
 import logo from "../assets/easyLogo2.png";
+import { useNavigate } from "react-router-dom";
 
 ///array per i ticket preso dal globalcontext
 
 //oggetto per la visualizzazione dei ticket presi dal JSON
 
 export default function Dashboard() {
+  const navigate = useNavigate();
   const { bici, stazioni, ticket, utenti, dispatch } =
     useContext(GlobalContext);
   const [isUtentiOpen, setUtentiOpen] = useState(false);
@@ -99,7 +101,7 @@ export default function Dashboard() {
             cursor: "pointer",
           }}
           onClick={() => {
-            window.location.href = "/app";
+            navigate("/app");
           }}
           title="Torna all'app"
         />

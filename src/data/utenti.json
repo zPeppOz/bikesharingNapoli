@@ -16,7 +16,8 @@
     "username": "prisco.sorgente",
     "password": "test2",
     "prenotazioni": [],
-    "corse": []
+    "corse": [],
+    "ruolo": "admin"
   },
   {
     "id": 3,
@@ -96,6 +97,25 @@
     "cognome": "Rosa",
     "username": "gianluca.rosa",
     "password": "test11",
+    "prenotazioni": [],
+    "corse": []
+  },
+  {
+    "id": "12",
+    "nome": "Paola",
+    "cognome": "Barra",
+    "username": "paola.barra",
+    "password": "paolabarra",
+    "prenotazioni": [],
+    "corse": [],
+    "ruolo": "admin"
+  },
+  {
+    "id": "13",
+    "nome": "Mariacarla",
+    "cognome": "Staffa",
+    "username": "mariacarla.staffa",
+    "password": "mariacarlastaffa",
     "prenotazioni": [],
     "corse": []
   }
