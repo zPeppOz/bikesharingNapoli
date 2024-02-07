@@ -54,7 +54,7 @@ export default function MainApp(props) {
     },
     {
       id: 3,
-      label: "Corse",
+      label: "Porcoddio",
       onClick: () => {
         setCorseOpen(true);
       },
