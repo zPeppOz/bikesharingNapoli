@@ -93,7 +93,8 @@ export default function MainApp(props) {
   const [isSectionMenuOpen, setSectionMenuOpen] = useState(false);
 
   //finzione per gestire la visibilità del SectionMenu
-  const toggleSectionMenu = () => {
+  const toggleSectionMenu = (index) => {
+    setSectionIndex(index);
     setSectionMenuOpen(true);
   };
 
@@ -351,6 +352,7 @@ function MenuDiv({
                         section.onClick
                           ? section.onClick()
                           : navigate(section.path);
+                        toggleSectionMenu(index);
                       }}
                       className="flex flex-row items-center justify-start"
                     >
@@ -361,7 +363,7 @@ function MenuDiv({
             )}
 
             {isSectionMenuOpen && (
-              <SectionMenu data={menuSections[index].data} />
+              <SectionMenu data={menuSections[isSectionIndex].data} />
             )}
           </div>
         </div>

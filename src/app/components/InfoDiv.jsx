@@ -39,7 +39,7 @@ export function InfoDiv({ isBottomDivOpen, selected, handlers }) {
   function onResult(obj) {
     if (obj) {
       const bicicletta = JSON.parse(obj);
-      let bici = state.bici.find((b) => (b.id = bicicletta.biciId));
+      let bici = state.bici.find((b) => b.id === bicicletta.biciId);
       handlers.setSelected(bici);
       setShowQrDialog(false);
       handlers.showBottomDiv();
